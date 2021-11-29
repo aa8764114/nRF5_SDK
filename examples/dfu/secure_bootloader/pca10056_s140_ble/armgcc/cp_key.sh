@@ -1,0 +1,1 @@
+cp /Users/motosawa/Documents/nordic_key/dfu_public_key.c /Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/examples/dfu
