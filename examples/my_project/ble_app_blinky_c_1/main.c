@@ -25,7 +25,11 @@
 #define APP_BLE_CONN_CFG_TAG            1                       /**< A tag identifying the SoftDevice BLE configuration. */
 
 NRF_BLE_SCAN_DEF(m_scan);                                       /**< Scanning module instance. */
+
+//開一個全域變數，並打開一個同名的監聽，這個監聽可以收到跟其他監聽相同的資料
+//不過這個監聽專門處理藍牙中心設備的相關事情
 BLE_LBS_C_DEF(m_ble_lbs_c);                                     /**< Main structure used by the LBS client module. */
+
 NRF_BLE_GATT_DEF(m_gatt);                                       /**< GATT module instance. */
 //BLE_DB_DISCOVERY_DEF(m_db_disc);                                /**< DB discovery module instance. */
 NRF_BLE_GQ_DEF(m_ble_gatt_queue,                                /**< BLE GATT Queue instance. */
@@ -46,6 +50,8 @@ static void scan_start(void) {
     APP_ERROR_CHECK(nrf_ble_scan_start(&m_scan));
 }
 
+//不知道ble_lbs_c_evt_t這個結構是幹嘛的
+//只知道透過他可以拿到外圍設備送來的資料
 static void lbs_c_evt_handler(ble_lbs_c_t *p_lbs_c, ble_lbs_c_evt_t *p_lbs_c_evt) {
     switch (p_lbs_c_evt->evt_type) {
 //        case BLE_LBS_C_EVT_DISCOVERY_COMPLETE: {
@@ -74,13 +80,16 @@ static void lbs_c_evt_handler(ble_lbs_c_t *p_lbs_c, ble_lbs_c_evt_t *p_lbs_c_evt
     }
 }
 
+//監聽到一些事件要做什麼
 static void ble_evt_handler(ble_evt_t const *p_ble_evt, void *p_context) {
     ret_code_t err_code;
     ble_gap_evt_t const *p_gap_evt = &p_ble_evt->evt.gap_evt;
     switch (p_ble_evt->header.evt_id) {
         case BLE_GAP_EVT_CONNECTED: {
-            NRF_LOG_INFO("[%x][a][connect]", p_gap_evt->conn_handle);
+            NRF_LOG_INFO("[%x][a][connect]", p_gap_evt->conn_handle);   //p_gap_evt->conn_handle：連線設備的handle編號
             NRF_LOG_INFO("[%x][b][discovery]->", p_gap_evt->conn_handle);
+
+            //m_ble_lbs_c變數在最一開始就透過define就建立了，並且同時也開好了同名的監聽
             ble_lbs_c_handles_assign(&m_ble_lbs_c, p_gap_evt->conn_handle, NULL);
             err_code = ble_lbs_c_button_notif_enable(&m_ble_lbs_c);
 
@@ -141,6 +150,8 @@ static void ble_evt_handler(ble_evt_t const *p_ble_evt, void *p_context) {
     }
 }
 
+//先在lbs_c_init_obj設定好參數，再透過ble_lbs_c_init把設定好的資料放進m_ble_lbs_c
+//m_ble_lbs_c變數在最一開始就透過define就建立了，並且同時也開好了同名的監聽
 static void lbs_c_init(void) {
     ret_code_t err_code;
     ble_lbs_c_init_t lbs_c_init_obj;
@@ -159,11 +170,12 @@ static void ble_stack_init(void) {
     APP_ERROR_CHECK(err_code);
     err_code = nrf_sdh_ble_enable(&ram_start);
     APP_ERROR_CHECK(err_code);
-    NRF_SDH_BLE_OBSERVER(m_ble_observer, 3, ble_evt_handler, NULL);
+    NRF_SDH_BLE_OBSERVER(m_ble_observer, 3, ble_evt_handler, NULL); //開啟藍牙監聽
 }
 
 static void button_event_handler(uint8_t pin_no, uint8_t button_action) {
     NRF_LOG_INFO("[發][%d]", button_action);
+    NRF_LOG_INFO("m_ble_lbs_c.conn_handle:%x", m_ble_lbs_c.conn_handle);    //不知道是從啥時拿到這個handle編號
     ret_code_t err_code = ble_lbs_led_status_send(&m_ble_lbs_c, button_action);
     APP_ERROR_CHECK(err_code);
 }

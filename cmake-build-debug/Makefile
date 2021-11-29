@@ -129,6 +129,19 @@ my1_ble_app_blinky_c_pca10056_s140/fast:
 	$(MAKE) $(MAKESILENT) -f examples/my_project/ble_app_blinky_c_1/pca10056/s140/armgcc/CMakeFiles/my1_ble_app_blinky_c_pca10056_s140.dir/build.make examples/my_project/ble_app_blinky_c_1/pca10056/s140/armgcc/CMakeFiles/my1_ble_app_blinky_c_pca10056_s140.dir/build
 .PHONY : my1_ble_app_blinky_c_pca10056_s140/fast
 
+#=============================================================================
+# Target rules for targets named research_ble_app_blinky_pca10056_s140
+
+# Build rule for target.
+research_ble_app_blinky_pca10056_s140: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 research_ble_app_blinky_pca10056_s140
+.PHONY : research_ble_app_blinky_pca10056_s140
+
+# fast build rule for target.
+research_ble_app_blinky_pca10056_s140/fast:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/ble_app_blinky_research/pca10056/s140/armgcc/CMakeFiles/research_ble_app_blinky_pca10056_s140.dir/build.make examples/my_project/ble_app_blinky_research/pca10056/s140/armgcc/CMakeFiles/research_ble_app_blinky_pca10056_s140.dir/build
+.PHONY : research_ble_app_blinky_pca10056_s140/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -138,6 +151,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... my1_ble_app_blinky_c_pca10056_s140"
+	@echo "... research_ble_app_blinky_pca10056_s140"
 .PHONY : help
 
 

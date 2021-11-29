@@ -57,7 +57,6 @@ static void on_write(ble_lbs_t * p_lbs, ble_evt_t const * p_ble_evt)
 
 //    NRF_LOG_INFO("[%x][mob][say]", p_ble_evt->evt.gap_evt.conn_handle)
 //    NRF_LOG_INFO("p_evt_write->op:%d", p_evt_write->op)
-
     NRF_LOG_INFO("button_char_handles.cccd_handle:%d", p_lbs->button_char_handles.cccd_handle)
     NRF_LOG_INFO("button_char_handles.value_handle:%d", p_lbs->button_char_handles.value_handle)
     NRF_LOG_INFO("led_char_handles.value_handle:%d", p_lbs->led_char_handles.value_handle)

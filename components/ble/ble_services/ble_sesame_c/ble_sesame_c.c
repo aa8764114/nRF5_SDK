@@ -23,7 +23,7 @@ static void gatt_error_handler(uint32_t nrf_error,
     }
 }
 
-
+//跟blinky的on_write有點像
 static void on_hvx(ble_lbs_c_t *p_ble_lbs_c, ble_evt_t const *p_ble_evt) {
     // Check if the event is on the link for this instance.
     if (p_ble_lbs_c->conn_handle != p_ble_evt->evt.gattc_evt.conn_handle) {
@@ -35,7 +35,7 @@ static void on_hvx(ble_lbs_c_t *p_ble_lbs_c, ble_evt_t const *p_ble_evt) {
     ble_lbs_c_evt.evt_type = BLE_LBS_C_EVT_BUTTON_NOTIFICATION;
     ble_lbs_c_evt.conn_handle = p_ble_lbs_c->conn_handle;
     ble_lbs_c_evt.params.button.button_state = p_ble_evt->evt.gattc_evt.params.hvx.data[0];
-    p_ble_lbs_c->evt_handler(p_ble_lbs_c, &ble_lbs_c_evt);
+    p_ble_lbs_c->evt_handler(p_ble_lbs_c, &ble_lbs_c_evt);  //不知道這邊的函數是從哪放進去的
 }
 
 
@@ -97,12 +97,15 @@ static void on_disconnected(ble_lbs_c_t *p_ble_lbs_c, ble_evt_t const *p_ble_evt
 uint32_t ble_lbs_c_init(ble_lbs_c_t *p_ble_lbs_c, ble_lbs_c_init_t *p_ble_lbs_c_init) {
     uint32_t err_code;
 
-    ble_uuid128_t lbs_base_uuid = {LBS_UUID_BASE};
+    ble_uuid128_t lbs_base_uuid = {LBS_UUID_BASE};  //LBS的UUID
 
 //    p_ble_lbs_c->peer_lbs_db.button_cccd_handle = 14;
 //    p_ble_lbs_c->peer_lbs_db.button_handle = 800;
 //    p_ble_lbs_c->peer_lbs_db.led_handle = 600;
 
+    //這個不知道是指自己的handle還是外圍設備的handle編號
+    //我猜是自己設備的handle編號，然後我發現button_cccd_handle，似乎要跟外圍設備一樣，其他兩個可以亂設
+    //經過觀察發現外圍設備的cccd handle是sd自動分配的，但固定都分到14
     p_ble_lbs_c->peer_lbs_db.button_cccd_handle = 14;
     p_ble_lbs_c->peer_lbs_db.button_handle = 13;
     p_ble_lbs_c->peer_lbs_db.led_handle = 16;
@@ -112,10 +115,15 @@ uint32_t ble_lbs_c_init(ble_lbs_c_t *p_ble_lbs_c, ble_lbs_c_init_t *p_ble_lbs_c_
     p_ble_lbs_c->p_gatt_queue = p_ble_lbs_c_init->p_gatt_queue;
     p_ble_lbs_c->error_handler = p_ble_lbs_c_init->error_handler;
 
+
+    //新增gatt服務
+    //看來東西設定好後用這個打開，之後就會動了
+    //看來要開gatt服務需要設定文的參數，還有這個服務的UUID
     err_code = sd_ble_uuid_vs_add(&lbs_base_uuid, &p_ble_lbs_c->uuid_type);
     if (err_code != NRF_SUCCESS) {
         return err_code;
     }
+
     VERIFY_SUCCESS(err_code);
     return err_code;
 //    ble_uuid_t lbs_uuid;
@@ -132,12 +140,12 @@ void ble_lbs_c_on_ble_evt(ble_evt_t const *p_ble_evt, void *p_context) {
     ble_lbs_c_t *p_ble_lbs_c = (ble_lbs_c_t *) p_context;
 
     switch (p_ble_evt->header.evt_id) {
-        case BLE_GATTC_EVT_HVX:
+        case BLE_GATTC_EVT_HVX: //外圍設備按按鈕
             on_hvx(p_ble_lbs_c, p_ble_evt);
             break;
 
-        case BLE_GAP_EVT_DISCONNECTED:
-            on_disconnected(p_ble_lbs_c, p_ble_evt);
+        case BLE_GAP_EVT_DISCONNECTED:  //斷線
+            on_disconnected(p_ble_lbs_c, p_ble_evt);    //把之前設定的handle編號都清空
             break;
 
         default:
@@ -179,7 +187,7 @@ uint32_t ble_lbs_c_button_notif_enable(ble_lbs_c_t *p_ble_lbs_c) {
     return cccd_configure(p_ble_lbs_c, true);
 }
 
-
+//發送訊號到外圍設備
 uint32_t ble_lbs_led_status_send(ble_lbs_c_t *p_ble_lbs_c, uint8_t status) {
     VERIFY_PARAM_NOT_NULL(p_ble_lbs_c);
 
