@@ -516,6 +516,7 @@ static uint32_t led_status_send_to_all(uint8_t button_action)
  * @param[in] pin_no        The pin that the event applies to.
  * @param[in] button_action The button action (press/release).
  */
+//送出資料到各個訂閱的裝置
 static void button_event_handler(uint8_t pin_no, uint8_t button_action)
 {
     ret_code_t err_code;

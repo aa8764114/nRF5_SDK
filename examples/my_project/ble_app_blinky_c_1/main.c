@@ -239,6 +239,7 @@ int main(void) {
     scan_start();
     NRF_LOG_INFO("[APP] =====> ")
 
+//    for(;;) = while(1)
     for (;;) {
         NRF_LOG_FLUSH();// idle_state_handle();
         nrf_pwr_mgmt_run();
