@@ -427,6 +427,12 @@ nRF5_SDK_BINARY_DIR:STATIC=/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cma
 nRF5_SDK_SOURCE_DIR:STATIC=/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560
 
 //Value Computed by CMake
+ori_ble_app_blinky_c_pca10056_s140_BINARY_DIR:STATIC=/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/ble_app_blinky_c_res/pca10056/s140/armgcc
+
+//Value Computed by CMake
+ori_ble_app_blinky_c_pca10056_s140_SOURCE_DIR:STATIC=/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/examples/my_project/ble_app_blinky_c_res/pca10056/s140/armgcc
+
+//Value Computed by CMake
 research_ble_app_blinky_pca10056_s140_BINARY_DIR:STATIC=/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/ble_app_blinky_research/pca10056/s140/armgcc
 
 //Value Computed by CMake
@@ -560,7 +566,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=2
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=3
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

@@ -962,6 +962,8 @@ static uint32_t discovery_start(ble_db_discovery_t * const p_db_discovery, uint1
 
 uint32_t ble_db_discovery_start(ble_db_discovery_t * const p_db_discovery, uint16_t conn_handle)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     VERIFY_PARAM_NOT_NULL(p_db_discovery);
     VERIFY_MODULE_INITIALIZED();
 

@@ -39,12 +39,27 @@ static void on_hvx(ble_lbs_c_t *p_ble_lbs_c, ble_evt_t const *p_ble_evt) {
 }
 
 
-static void on_disconnected(ble_lbs_c_t *p_ble_lbs_c, ble_evt_t const *p_ble_evt) {
-    if (p_ble_lbs_c->conn_handle == p_ble_evt->evt.gap_evt.conn_handle) {
-        p_ble_lbs_c->conn_handle = BLE_CONN_HANDLE_INVALID;
+static void on_disconnected(ble_lbs_c_t * p_ble_lbs_c, ble_evt_t const * p_ble_evt)
+{
+    if (p_ble_lbs_c->conn_handle == p_ble_evt->evt.gap_evt.conn_handle)
+    {
+        NRF_LOG_INFO("[on_disconnected...]")
+        NRF_LOG_INFO("p_ble_lbs_c->conn_handle:%x", p_ble_lbs_c->conn_handle)
+        NRF_LOG_INFO("p_ble_lbs_c->peer_lbs_db.button_cccd_handle:%d", p_ble_lbs_c->peer_lbs_db.button_cccd_handle)
+        NRF_LOG_INFO("p_ble_lbs_c->peer_lbs_db.button_handle:%d", p_ble_lbs_c->peer_lbs_db.button_handle)
+        NRF_LOG_INFO("p_ble_lbs_c->peer_lbs_db.led_handle:%d", p_ble_lbs_c->peer_lbs_db.led_handle)
+
+        NRF_LOG_INFO("[processing...]")
+
+        p_ble_lbs_c->conn_handle                    = BLE_CONN_HANDLE_INVALID;
         p_ble_lbs_c->peer_lbs_db.button_cccd_handle = BLE_GATT_HANDLE_INVALID;
-        p_ble_lbs_c->peer_lbs_db.button_handle = BLE_GATT_HANDLE_INVALID;
-        p_ble_lbs_c->peer_lbs_db.led_handle = BLE_GATT_HANDLE_INVALID;
+        p_ble_lbs_c->peer_lbs_db.button_handle      = BLE_GATT_HANDLE_INVALID;
+        p_ble_lbs_c->peer_lbs_db.led_handle         = BLE_GATT_HANDLE_INVALID;
+
+        NRF_LOG_INFO("p_ble_lbs_c->conn_handle:%x", p_ble_lbs_c->conn_handle)
+        NRF_LOG_INFO("p_ble_lbs_c->peer_lbs_db.button_cccd_handle:%d", p_ble_lbs_c->peer_lbs_db.button_cccd_handle)
+        NRF_LOG_INFO("p_ble_lbs_c->peer_lbs_db.button_handle:%d", p_ble_lbs_c->peer_lbs_db.button_handle)
+        NRF_LOG_INFO("p_ble_lbs_c->peer_lbs_db.led_handle:%d", p_ble_lbs_c->peer_lbs_db.led_handle)
     }
 }
 
@@ -98,10 +113,6 @@ uint32_t ble_lbs_c_init(ble_lbs_c_t *p_ble_lbs_c, ble_lbs_c_init_t *p_ble_lbs_c_
     uint32_t err_code;
 
     ble_uuid128_t lbs_base_uuid = {LBS_UUID_BASE};  //LBS的UUID
-
-//    p_ble_lbs_c->peer_lbs_db.button_cccd_handle = 14;
-//    p_ble_lbs_c->peer_lbs_db.button_handle = 800;
-//    p_ble_lbs_c->peer_lbs_db.led_handle = 600;
 
     //這個不知道是指自己的handle還是外圍設備的handle編號
     //我猜是自己設備的handle編號，然後我發現button_cccd_handle，似乎要跟外圍設備一樣，其他兩個可以亂設

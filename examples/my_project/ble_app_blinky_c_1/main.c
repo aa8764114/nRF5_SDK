@@ -22,6 +22,13 @@
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 
+#define CENTRAL_SCANNING_LED            BSP_BOARD_LED_0                     /**< Scanning LED will be on when the device is scanning. */
+#define CENTRAL_CONNECTED_LED           BSP_BOARD_LED_1                     /**< Connected LED will be on when the device is connected. */
+#define LEDBUTTON_LED                   BSP_BOARD_LED_2                     /**< LED to indicate a change of state of the the Button characteristic on the peer. */
+#define LEDBUTTON_BUTTON_PIN            BSP_BUTTON_0                        /**< Button that will write to the LED characteristic of the peer */
+#define BUTTON_DETECTION_DELAY          APP_TIMER_TICKS(50)                 /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
+
+
 #define APP_BLE_CONN_CFG_TAG            1                       /**< A tag identifying the SoftDevice BLE configuration. */
 
 NRF_BLE_SCAN_DEF(m_scan);                                       /**< Scanning module instance. */
@@ -47,6 +54,8 @@ static void lbs_error_handler(uint32_t nrf_error) {
 }
 
 static void scan_start(void) {
+    bsp_board_led_off(CENTRAL_CONNECTED_LED);
+    bsp_board_led_on(CENTRAL_SCANNING_LED);
     APP_ERROR_CHECK(nrf_ble_scan_start(&m_scan));
 }
 
@@ -71,6 +80,16 @@ static void lbs_c_evt_handler(ble_lbs_c_t *p_lbs_c, ble_lbs_c_evt_t *p_lbs_c_evt
 
         case BLE_LBS_C_EVT_BUTTON_NOTIFICATION: {
             NRF_LOG_INFO("[收][%x]", p_lbs_c_evt->params.button.button_state);
+            if (p_lbs_c_evt->params.button.button_state)
+            {
+                //如果接收到外圍設備的cccd訊號不是0就亮燈
+                bsp_board_led_on(LEDBUTTON_LED);
+            }
+            else
+            {
+                //如果接收到外圍設備的cccd訊號是0就關燈
+                bsp_board_led_off(LEDBUTTON_LED);
+            }
         }
             break; // BLE_LBS_C_EVT_BUTTON_NOTIFICATION
 
@@ -92,6 +111,9 @@ static void ble_evt_handler(ble_evt_t const *p_ble_evt, void *p_context) {
             //m_ble_lbs_c變數在最一開始就透過define就建立了，並且同時也開好了同名的監聽
             ble_lbs_c_handles_assign(&m_ble_lbs_c, p_gap_evt->conn_handle, NULL);
             err_code = ble_lbs_c_button_notif_enable(&m_ble_lbs_c);
+
+            bsp_board_led_on(CENTRAL_CONNECTED_LED);
+            bsp_board_led_off(CENTRAL_SCANNING_LED);
 
             APP_ERROR_CHECK(err_code);
         }
@@ -238,6 +260,8 @@ int main(void) {
     lbs_c_init();
     scan_start();
     NRF_LOG_INFO("[APP] =====> ")
+
+    bsp_board_led_on(CENTRAL_SCANNING_LED);
 
 //    for(;;) = while(1)
     for (;;) {

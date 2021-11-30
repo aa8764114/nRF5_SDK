@@ -117,6 +117,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named ori_ble_app_blinky_c_pca10056_s140
+
+# Build rule for target.
+ori_ble_app_blinky_c_pca10056_s140: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ori_ble_app_blinky_c_pca10056_s140
+.PHONY : ori_ble_app_blinky_c_pca10056_s140
+
+# fast build rule for target.
+ori_ble_app_blinky_c_pca10056_s140/fast:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/ble_app_blinky_c_res/pca10056/s140/armgcc/CMakeFiles/ori_ble_app_blinky_c_pca10056_s140.dir/build.make examples/my_project/ble_app_blinky_c_res/pca10056/s140/armgcc/CMakeFiles/ori_ble_app_blinky_c_pca10056_s140.dir/build
+.PHONY : ori_ble_app_blinky_c_pca10056_s140/fast
+
+#=============================================================================
 # Target rules for targets named my1_ble_app_blinky_c_pca10056_s140
 
 # Build rule for target.
@@ -138,6 +151,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... my1_ble_app_blinky_c_pca10056_s140"
+	@echo "... ori_ble_app_blinky_c_pca10056_s140"
 .PHONY : help
 
 
