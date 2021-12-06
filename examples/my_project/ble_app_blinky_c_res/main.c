@@ -122,6 +122,8 @@ static void lbs_c_evt_handler(ble_lbs_c_t * p_lbs_c, ble_lbs_c_evt_t * p_lbs_c_e
         //ble_lbs_c_res.c -> ble_lbs_on_db_disc_evt()
         case BLE_LBS_C_EVT_DISCOVERY_COMPLETE:
         {
+            NRF_LOG_INFO("\t%s -> BLE_LBS_C_EVT_DISCOVERY_COMPLETE \n", __func__)
+
             ret_code_t err_code;
 
             err_code = ble_lbs_c_handles_assign(&m_ble_lbs_c,
@@ -140,6 +142,8 @@ static void lbs_c_evt_handler(ble_lbs_c_t * p_lbs_c, ble_lbs_c_evt_t * p_lbs_c_e
         //ble_lbs_c_res.c -> on_hvx()
         case BLE_LBS_C_EVT_BUTTON_NOTIFICATION:
         {
+            NRF_LOG_INFO("\t%s -> BLE_LBS_C_EVT_BUTTON_NOTIFICATION \n", __func__)
+
             NRF_LOG_INFO("[收] [%x]", p_lbs_c_evt->params.button.button_state);
             //監聽到cccd有動靜，就讀取外圍設備寫入的數值
             if (p_lbs_c_evt->params.button.button_state)
@@ -155,6 +159,7 @@ static void lbs_c_evt_handler(ble_lbs_c_t * p_lbs_c, ble_lbs_c_evt_t * p_lbs_c_e
         } break; // BLE_LBS_C_EVT_BUTTON_NOTIFICATION
 
         default:
+            NRF_LOG_INFO("\t%s -> default \n", __func__)
             // No implementation needed.
             break;
     }
@@ -181,6 +186,9 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
         // discovery, update LEDs status and resume scanning if necessary. */
         case BLE_GAP_EVT_CONNECTED:
         {
+            NRF_LOG_INFO("\t%s -> BLE_GAP_EVT_CONNECTED \n", __func__)
+
+
             NRF_LOG_INFO("[%x] [Connected]", p_gap_evt->conn_handle);
             err_code = ble_lbs_c_handles_assign(&m_ble_lbs_c, p_gap_evt->conn_handle, NULL);    //把連線裝置編號抄進全域變數中
             APP_ERROR_CHECK(err_code);
@@ -199,12 +207,16 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
         //看來另一個監聽的優先序比較高
         case BLE_GAP_EVT_DISCONNECTED:
         {
+            NRF_LOG_INFO("\t%s -> BLE_GAP_EVT_DISCONNECTED \n", __func__)
+
             NRF_LOG_INFO("[Disconnected]");
             scan_start();
         } break;
 
         case BLE_GAP_EVT_TIMEOUT:
         {
+            NRF_LOG_INFO("\t%s -> BLE_GAP_EVT_TIMEOUT \n", __func__)
+
             // We have not specified a timeout for scanning, so only connection attemps can timeout.
             if (p_gap_evt->params.timeout.src == BLE_GAP_TIMEOUT_SRC_CONN)
             {
@@ -214,6 +226,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 
         case BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST:
         {
+            NRF_LOG_INFO("\t%s -> BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST \n", __func__)
+
             // Accept parameters requested by peer.
             err_code = sd_ble_gap_conn_param_update(p_gap_evt->conn_handle,
                                         &p_gap_evt->params.conn_param_update_request.conn_params);
@@ -222,6 +236,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
+            NRF_LOG_INFO("\t%s -> BLE_GAP_EVT_PHY_UPDATE_REQUEST \n", __func__)
+
             NRF_LOG_DEBUG("PHY update request.");
             ble_gap_phys_t const phys =
             {
@@ -234,6 +250,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 
         case BLE_GATTC_EVT_TIMEOUT:
         {
+            NRF_LOG_INFO("\t%s -> BLE_GATTC_EVT_TIMEOUT \n", __func__)
+
             // Disconnect on GATT Client timeout event.
             NRF_LOG_DEBUG("GATT Client Timeout.");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gattc_evt.conn_handle,
@@ -243,6 +261,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 
         case BLE_GATTS_EVT_TIMEOUT:
         {
+            NRF_LOG_INFO("\t%s -> BLE_GATTS_EVT_TIMEOUT \n", __func__)
+
             // Disconnect on GATT Server timeout event.
             NRF_LOG_DEBUG("GATT Server Timeout.");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gatts_evt.conn_handle,
@@ -252,6 +272,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 
         default:
             // No implementation needed.
+            NRF_LOG_INFO("\t%s -> default \n", __func__)
+
             break;
     }
 }
@@ -321,6 +343,8 @@ static void button_event_handler(uint8_t pin_no, uint8_t button_action)
     {
         //如果按下設定的按鈕，送出訊號給外圍設備
         case LEDBUTTON_BUTTON_PIN:
+            NRF_LOG_INFO("\t%s -> LEDBUTTON_BUTTON_PIN \n", __func__)
+
             err_code = ble_lbs_led_status_send(&m_ble_lbs_c, button_action);    //送出訊號給外圍設備
             if (err_code != NRF_SUCCESS &&
                 err_code != BLE_ERROR_INVALID_CONN_HANDLE &&
@@ -335,6 +359,8 @@ static void button_event_handler(uint8_t pin_no, uint8_t button_action)
             break;
 
         default:
+            NRF_LOG_INFO("\t%s -> default \n", __func__)
+
             APP_ERROR_HANDLER(pin_no);
             break;
     }
@@ -354,11 +380,15 @@ static void scan_evt_handler(scan_evt_t const * p_scan_evt)
     switch(p_scan_evt->scan_evt_id)
     {
         case NRF_BLE_SCAN_EVT_CONNECTING_ERROR:
+            NRF_LOG_INFO("\t%s -> NRF_BLE_SCAN_EVT_CONNECTING_ERROR \n", __func__)
+
             err_code = p_scan_evt->params.connecting_err.err_code;
             APP_ERROR_CHECK(err_code);
             break;
         default:
-          break;
+            NRF_LOG_INFO("\t%s -> default \n", __func__)
+
+            break;
     }
 }
 

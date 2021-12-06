@@ -253,14 +253,20 @@ void ble_lbs_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GATTC_EVT_HVX: //外圍設備按下按鈕
+            NRF_LOG_INFO("\t%s -> BLE_GATTC_EVT_HVX \n", __func__)
+
             on_hvx(p_ble_lbs_c, p_ble_evt);
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:  //設備斷線
+            NRF_LOG_INFO("\t%s -> BLE_GAP_EVT_DISCONNECTED \n", __func__)
+
             on_disconnected(p_ble_lbs_c, p_ble_evt);
             break;
 
         default:
+            NRF_LOG_INFO("\t%s -> default \n", __func__)
+
             break;
     }
 }
