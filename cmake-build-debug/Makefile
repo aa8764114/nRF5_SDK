@@ -117,30 +117,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named ori_ble_app_blinky_c_pca10056_s140
+# Target rules for targets named saadc_pca10056
 
 # Build rule for target.
-ori_ble_app_blinky_c_pca10056_s140: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ori_ble_app_blinky_c_pca10056_s140
-.PHONY : ori_ble_app_blinky_c_pca10056_s140
+saadc_pca10056: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 saadc_pca10056
+.PHONY : saadc_pca10056
 
 # fast build rule for target.
-ori_ble_app_blinky_c_pca10056_s140/fast:
-	$(MAKE) $(MAKESILENT) -f examples/my_project/ble_app_blinky_c_res/pca10056/s140/armgcc/CMakeFiles/ori_ble_app_blinky_c_pca10056_s140.dir/build.make examples/my_project/ble_app_blinky_c_res/pca10056/s140/armgcc/CMakeFiles/ori_ble_app_blinky_c_pca10056_s140.dir/build
-.PHONY : ori_ble_app_blinky_c_pca10056_s140/fast
-
-#=============================================================================
-# Target rules for targets named my1_ble_app_blinky_c_pca10056_s140
-
-# Build rule for target.
-my1_ble_app_blinky_c_pca10056_s140: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 my1_ble_app_blinky_c_pca10056_s140
-.PHONY : my1_ble_app_blinky_c_pca10056_s140
-
-# fast build rule for target.
-my1_ble_app_blinky_c_pca10056_s140/fast:
-	$(MAKE) $(MAKESILENT) -f examples/my_project/ble_app_blinky_c_1/pca10056/s140/armgcc/CMakeFiles/my1_ble_app_blinky_c_pca10056_s140.dir/build.make examples/my_project/ble_app_blinky_c_1/pca10056/s140/armgcc/CMakeFiles/my1_ble_app_blinky_c_pca10056_s140.dir/build
-.PHONY : my1_ble_app_blinky_c_pca10056_s140/fast
+saadc_pca10056/fast:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/saadc/pca10056/blank/armgcc/CMakeFiles/saadc_pca10056.dir/build.make examples/my_project/saadc/pca10056/blank/armgcc/CMakeFiles/saadc_pca10056.dir/build
+.PHONY : saadc_pca10056/fast
 
 # Help Target
 help:
@@ -150,8 +137,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... my1_ble_app_blinky_c_pca10056_s140"
-	@echo "... ori_ble_app_blinky_c_pca10056_s140"
+	@echo "... saadc_pca10056"
 .PHONY : help
 
 

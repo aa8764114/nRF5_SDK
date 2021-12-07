@@ -70,8 +70,6 @@ static bool     m_initialized = false;      /**< This variable Indicates if the 
  */
 static ble_db_discovery_evt_handler_t registered_handler_get(ble_uuid_t const * p_srv_uuid)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     for (uint32_t i = 0; i < m_num_of_handlers_reg; i++)
     {
         if (BLE_UUID_EQ(&(m_registered_handlers[i]), p_srv_uuid))
@@ -95,8 +93,6 @@ static ble_db_discovery_evt_handler_t registered_handler_get(ble_uuid_t const * 
 static uint32_t registered_handler_set(ble_uuid_t                     const * p_srv_uuid,
                                        ble_db_discovery_evt_handler_t         p_evt_handler)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     if (registered_handler_get(p_srv_uuid) != NULL)
     {
         return NRF_SUCCESS;
@@ -120,8 +116,6 @@ static uint32_t registered_handler_set(ble_uuid_t                     const * p_
  */
 static void pending_user_evts_send(ble_db_discovery_t * p_db_discovery)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     for (uint32_t i = 0; i < m_num_of_handlers_reg; i++)
     {
         // Pass the event to the corresponding event handler.
@@ -143,8 +137,6 @@ static void pending_user_evts_send(ble_db_discovery_t * p_db_discovery)
 static void discovery_available_evt_trigger(ble_db_discovery_t * const p_db_discovery,
                                             uint16_t             const conn_handle)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     ble_db_discovery_evt_t evt;
 
     memset(&evt, 0, sizeof(evt));
@@ -176,8 +168,6 @@ static void discovery_error_evt_trigger(ble_db_discovery_t * p_db_discovery,
                                         uint32_t             err_code,
                                         uint16_t             conn_handle)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     ble_db_discovery_evt_handler_t   p_evt_handler;
     ble_gatt_db_srv_t              * p_srv_being_discovered;
 
@@ -209,8 +199,6 @@ static void discovery_error_handler(uint32_t   nrf_error,
                                     void     * p_ctx,
                                     uint16_t   conn_handle)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     ble_db_discovery_t * p_db_discovery = (ble_db_discovery_t *)p_ctx;
     p_db_discovery->discovery_in_progress = false;
 
@@ -236,8 +224,6 @@ static void discovery_complete_evt_trigger(ble_db_discovery_t * p_db_discovery,
                                            bool                 is_srv_found,
                                            uint16_t             conn_handle)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     ble_db_discovery_evt_handler_t   p_evt_handler;
     ble_gatt_db_srv_t              * p_srv_being_discovered;
 
@@ -294,8 +280,6 @@ static void discovery_complete_evt_trigger(ble_db_discovery_t * p_db_discovery,
 static void on_srv_disc_completion(ble_db_discovery_t * p_db_discovery,
                                    uint16_t             conn_handle)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     nrf_ble_gq_req_t db_srv_disc_req;
 
     memset(&db_srv_disc_req, 0, sizeof(nrf_ble_gq_req_t));
@@ -369,8 +353,6 @@ static void on_srv_disc_completion(ble_db_discovery_t * p_db_discovery,
 static bool is_char_discovery_reqd(ble_db_discovery_t * p_db_discovery,
                                    ble_gattc_char_t   * p_after_char)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     if (p_after_char->handle_value <
         p_db_discovery->services[p_db_discovery->curr_srv_ind].handle_range.end_handle)
     {
@@ -409,8 +391,6 @@ static bool is_desc_discovery_reqd(ble_db_discovery_t       * p_db_discovery,
                                    ble_gatt_db_char_t       * p_next_char,
                                    ble_gattc_handle_range_t * p_handle_range)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     if (p_next_char == NULL)
     {
         // Current characteristic is the last characteristic in the service. Check if the value
@@ -462,8 +442,6 @@ static bool is_desc_discovery_reqd(ble_db_discovery_t       * p_db_discovery,
 static uint32_t characteristics_discover(ble_db_discovery_t * p_db_discovery,
                                          uint16_t             conn_handle)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     ble_gatt_db_srv_t      * p_srv_being_discovered;
     ble_gattc_handle_range_t handle_range;
     nrf_ble_gq_req_t         db_char_disc_req;
@@ -525,8 +503,6 @@ static uint32_t descriptors_discover(ble_db_discovery_t * p_db_discovery,
                                      bool               * p_raise_discov_complete,
                                      uint16_t             conn_handle)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     ble_gattc_handle_range_t   handle_range;
     ble_gatt_db_char_t       * p_curr_char_being_discovered;
     ble_gatt_db_srv_t        * p_srv_being_discovered;
@@ -614,8 +590,6 @@ static uint32_t descriptors_discover(ble_db_discovery_t * p_db_discovery,
 static void on_primary_srv_discovery_rsp(ble_db_discovery_t       * p_db_discovery,
                                          ble_gattc_evt_t    const * p_ble_gattc_evt)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     ble_gatt_db_srv_t * p_srv_being_discovered;
 
     p_srv_being_discovered = &(p_db_discovery->services[p_db_discovery->curr_srv_ind]);
@@ -680,8 +654,6 @@ static void on_primary_srv_discovery_rsp(ble_db_discovery_t       * p_db_discove
 static void on_characteristic_discovery_rsp(ble_db_discovery_t       * p_db_discovery,
                                             ble_gattc_evt_t    const * p_ble_gattc_evt)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     uint32_t            err_code;
     ble_gatt_db_srv_t * p_srv_being_discovered;
     bool                perform_desc_discov = false;
@@ -812,8 +784,6 @@ static void on_characteristic_discovery_rsp(ble_db_discovery_t       * p_db_disc
 static void on_descriptor_discovery_rsp(ble_db_discovery_t * const    p_db_discovery,
                                         const ble_gattc_evt_t * const p_ble_gattc_evt)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     const ble_gattc_evt_desc_disc_rsp_t * p_desc_disc_rsp_evt;
     ble_gatt_db_srv_t                   * p_srv_being_discovered;
 
@@ -913,8 +883,6 @@ static void on_descriptor_discovery_rsp(ble_db_discovery_t * const    p_db_disco
 
 uint32_t ble_db_discovery_init(ble_db_discovery_init_t * p_db_init)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     uint32_t err_code = NRF_SUCCESS;
     VERIFY_PARAM_NOT_NULL(p_db_init);
     VERIFY_PARAM_NOT_NULL(p_db_init->evt_handler);
@@ -932,8 +900,6 @@ uint32_t ble_db_discovery_init(ble_db_discovery_init_t * p_db_init)
 
 uint32_t ble_db_discovery_close(ble_db_discovery_t * const p_db_discovery)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     m_num_of_handlers_reg                 = 0;
     m_initialized                         = false;
     p_db_discovery->pending_usr_evt_index = 0;
@@ -944,8 +910,6 @@ uint32_t ble_db_discovery_close(ble_db_discovery_t * const p_db_discovery)
 
 uint32_t ble_db_discovery_evt_register(ble_uuid_t const * p_uuid)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     VERIFY_PARAM_NOT_NULL(p_uuid);
     VERIFY_MODULE_INITIALIZED();
 
@@ -955,8 +919,6 @@ uint32_t ble_db_discovery_evt_register(ble_uuid_t const * p_uuid)
 
 static uint32_t discovery_start(ble_db_discovery_t * const p_db_discovery, uint16_t conn_handle)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     ret_code_t          err_code;
     ble_gatt_db_srv_t * p_srv_being_discovered;
     nrf_ble_gq_req_t    db_srv_disc_req;
@@ -1000,8 +962,6 @@ static uint32_t discovery_start(ble_db_discovery_t * const p_db_discovery, uint1
 
 uint32_t ble_db_discovery_start(ble_db_discovery_t * const p_db_discovery, uint16_t conn_handle)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     VERIFY_PARAM_NOT_NULL(p_db_discovery);
     VERIFY_MODULE_INITIALIZED();
 
@@ -1028,8 +988,6 @@ uint32_t ble_db_discovery_start(ble_db_discovery_t * const p_db_discovery, uint1
 static void on_disconnected(ble_db_discovery_t       * p_db_discovery,
                             ble_gap_evt_t      const * p_evt)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     if (p_evt->conn_handle == p_db_discovery->conn_handle)
     {
         p_db_discovery->discovery_in_progress = false;
@@ -1041,8 +999,6 @@ static void on_disconnected(ble_db_discovery_t       * p_db_discovery,
 void ble_db_discovery_on_ble_evt(ble_evt_t const * p_ble_evt,
                                  void            * p_context)
 {
-    NRF_LOG_INFO("%s\n", __func__)
-
     VERIFY_PARAM_NOT_NULL_VOID(p_ble_evt);
     VERIFY_PARAM_NOT_NULL_VOID(p_context);
     VERIFY_MODULE_INITIALIZED_VOID();
@@ -1052,31 +1008,26 @@ void ble_db_discovery_on_ble_evt(ble_evt_t const * p_ble_evt,
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP:
-            NRF_LOG_INFO("\t%s -> BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP \n", __func__)
 
             on_primary_srv_discovery_rsp(p_db_discovery, &(p_ble_evt->evt.gattc_evt));
             break;
 
         case BLE_GATTC_EVT_CHAR_DISC_RSP:
-            NRF_LOG_INFO("\t%s -> BLE_GATTC_EVT_CHAR_DISC_RSP \n", __func__)
 
             on_characteristic_discovery_rsp(p_db_discovery, &(p_ble_evt->evt.gattc_evt));
             break;
 
         case BLE_GATTC_EVT_DESC_DISC_RSP:
-            NRF_LOG_INFO("\t%s -> BLE_GATTC_EVT_DESC_DISC_RSP \n", __func__)
 
             on_descriptor_discovery_rsp(p_db_discovery, &(p_ble_evt->evt.gattc_evt));
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
-            NRF_LOG_INFO("\t%s -> BLE_GAP_EVT_DISCONNECTED \n", __func__)
 
             on_disconnected(p_db_discovery, &(p_ble_evt->evt.gap_evt));
             break;
 
         default:
-            NRF_LOG_INFO("\t%s -> default \n", __func__)
 
             break;
     }
