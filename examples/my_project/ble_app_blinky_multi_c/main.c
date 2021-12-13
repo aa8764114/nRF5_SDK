@@ -87,7 +87,8 @@ static void leds_init(void)
     bsp_board_init(BSP_INIT_LEDS);
 }
 
-
+//只有連線失敗才會做事
+//如果連線錯誤，印出錯誤訊息
 static void scan_evt_handler(scan_evt_t const * p_scan_evt)
 {
     if (zun) NRF_LOG_INFO("%s \n", __func__);
@@ -112,6 +113,11 @@ static void scan_evt_handler(scan_evt_t const * p_scan_evt)
 
 /**@brief Function for initializing the scanning and setting the filters.
  */
+//掃描某麼名字的藍牙裝置
+//建立 m_scan 同時也開了一個監聽，我想下面的 scan_evt_handler 應該就是監聽的時候會觸發的函數
+//1.把參數都先在 init_scan 先填好，再用 nrf_ble_scan_init 把內容抄進 m_scan ，同時也設定事件觸發函數 scan_evt_handler
+//2.設定要找哪個名字的藍牙裝置的過濾器
+//3.開啟過濾器
 static void scan_init(void)
 {
     NRF_LOG_INFO("%s \n", __func__)
@@ -134,7 +140,7 @@ static void scan_init(void)
     APP_ERROR_CHECK(err_code);
 }
 
-
+//用 scan_init 設定好的 m_scan 開始 scan
 /**@brief Function for starting scanning. */
 static void scan_start(void)
 {
@@ -155,12 +161,17 @@ static void scan_start(void)
  * @param[in] p_lbs_c     The instance of LBS_C that triggered the event.
  * @param[in] p_lbs_c_evt The LBS_C event.
  */
+//這個函數做所有跟cccd有關的事
+//事情有兩件
+//1.跟外圍設備連線時開啟cccd
+//2.外圍設備按下按鈕時，接收cccd訊息
 static void lbs_c_evt_handler(ble_lbs_c_t * p_lbs_c, ble_lbs_c_evt_t * p_lbs_c_evt)
 {
     NRF_LOG_INFO("%s \n", __func__)
 
     switch (p_lbs_c_evt->evt_type)
     {
+        //1.跟外圍設備連線後，檢查是否discovery完成後開啟cccd
         case BLE_LBS_C_EVT_DISCOVERY_COMPLETE:
         {
             NRF_LOG_INFO("%s -> BLE_LBS_C_EVT_DISCOVERY_COMPLETE \n", __func__)
@@ -178,6 +189,7 @@ static void lbs_c_evt_handler(ble_lbs_c_t * p_lbs_c, ble_lbs_c_evt_t * p_lbs_c_e
             APP_ERROR_CHECK(err_code);
         } break; // BLE_LBS_C_EVT_DISCOVERY_COMPLETE
 
+        //2.當外圍設備按下按鈕後，接收cccd訊號，並且控制LED亮暗
         case BLE_LBS_C_EVT_BUTTON_NOTIFICATION:
         {
             NRF_LOG_INFO("%s -> BLE_LBS_C_EVT_BUTTON_NOTIFICATION \n", __func__)

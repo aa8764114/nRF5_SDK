@@ -117,17 +117,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named saadc_pca10056
+# Target rules for targets named ssm2_bike_ble_app_template_pca10056_s140
 
 # Build rule for target.
-saadc_pca10056: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 saadc_pca10056
-.PHONY : saadc_pca10056
+ssm2_bike_ble_app_template_pca10056_s140: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ssm2_bike_ble_app_template_pca10056_s140
+.PHONY : ssm2_bike_ble_app_template_pca10056_s140
 
 # fast build rule for target.
-saadc_pca10056/fast:
-	$(MAKE) $(MAKESILENT) -f examples/my_project/saadc/pca10056/blank/armgcc/CMakeFiles/saadc_pca10056.dir/build.make examples/my_project/saadc/pca10056/blank/armgcc/CMakeFiles/saadc_pca10056.dir/build
-.PHONY : saadc_pca10056/fast
+ssm2_bike_ble_app_template_pca10056_s140/fast:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/ssm2_bike/pca10056/s140/armgcc/CMakeFiles/ssm2_bike_ble_app_template_pca10056_s140.dir/build.make examples/my_project/ssm2_bike/pca10056/s140/armgcc/CMakeFiles/ssm2_bike_ble_app_template_pca10056_s140.dir/build
+.PHONY : ssm2_bike_ble_app_template_pca10056_s140/fast
 
 # Help Target
 help:
@@ -137,7 +137,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... saadc_pca10056"
+	@echo "... ssm2_bike_ble_app_template_pca10056_s140"
 .PHONY : help
 
 

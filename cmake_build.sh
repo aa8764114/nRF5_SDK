@@ -41,12 +41,10 @@ EOF
 
 \echo "cmake_minimum_required(VERSION 2.8.9)" > CMakeLists.txt
 \echo "project(nRF5_SDK)" >> CMakeLists.txt
-#./examples/my_project/ble_app_blinky_DFU
-#./components/libraries/bootloader/dfu
-#/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/components/ble/ble_services/ble_dfu/ble_dfu.c
-#/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/experimental/ble_app_multiperipheral
-#/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/examples/my_project/flash_fds_1
-for makefile in `\find ./examples/my_project/saadc -name Makefile` ; do
+
+#/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/components/ble_ssm2
+#./examples/my_project/ssm2_bike
+for makefile in `\find ./examples/my_project/ssm2_bike -name Makefile` ; do
     dir=`\dirname ${makefile}`
     \echo "Creating CMakeLists.txt for ${makefile}"
     \pushd ${dir} > /dev/null

@@ -150,13 +150,25 @@ void ble_lbs_on_db_disc_evt(ble_lbs_c_t * p_ble_lbs_c, ble_db_discovery_evt_t co
         //If the instance was assigned prior to db_discovery, assign the db_handles
         if (p_ble_lbs_c->conn_handle != BLE_CONN_HANDLE_INVALID)
         {
+            NRF_LOG_INFO("Before : ")
+            NRF_LOG_INFO("p_ble_lbs_c->peer_lbs_db.led_handle:%d", p_ble_lbs_c->peer_lbs_db.led_handle)
+            NRF_LOG_INFO("p_ble_lbs_c->peer_lbs_db.button_handle:%d", p_ble_lbs_c->peer_lbs_db.button_handle)
+            NRF_LOG_INFO("p_ble_lbs_c->peer_lbs_db.button_cccd_handle:%d", p_ble_lbs_c->peer_lbs_db.button_cccd_handle)
+
             if ((p_ble_lbs_c->peer_lbs_db.led_handle         == BLE_GATT_HANDLE_INVALID)&&
                 (p_ble_lbs_c->peer_lbs_db.button_handle      == BLE_GATT_HANDLE_INVALID)&&
                 (p_ble_lbs_c->peer_lbs_db.button_cccd_handle == BLE_GATT_HANDLE_INVALID))
             {
                 p_ble_lbs_c->peer_lbs_db = evt.params.peer_db;  //handle在這放進去
             }
+            NRF_LOG_INFO("After : ")
+            NRF_LOG_INFO("p_ble_lbs_c->peer_lbs_db.led_handle:%d", p_ble_lbs_c->peer_lbs_db.led_handle)
+            NRF_LOG_INFO("p_ble_lbs_c->peer_lbs_db.button_handle:%d", p_ble_lbs_c->peer_lbs_db.button_handle)
+            NRF_LOG_INFO("p_ble_lbs_c->peer_lbs_db.button_cccd_handle:%d", p_ble_lbs_c->peer_lbs_db.button_cccd_handle)
         }
+
+        NRF_LOG_INFO("evt.conn_handle:%x", evt.conn_handle)
+        NRF_LOG_INFO("p_ble_lbs_c->conn_handle:%x", p_ble_lbs_c->conn_handle)
 
         p_ble_lbs_c->evt_handler(p_ble_lbs_c, &evt);    //lbs_c_evt_handler()
     }

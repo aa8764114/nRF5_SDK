@@ -35,7 +35,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.20.2/CMakeCCompiler.cmake"
   "CMakeFiles/3.20.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.20.2/CMakeSystem.cmake"
-  "../examples/my_project/saadc/pca10056/blank/armgcc/CMakeLists.txt"
+  "../examples/my_project/ssm2_bike/pca10056/s140/armgcc/CMakeLists.txt"
   )
 
 # The corresponding makefile is:
@@ -47,10 +47,10 @@ set(CMAKE_MAKEFILE_OUTPUTS
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
-  "examples/my_project/saadc/pca10056/blank/armgcc/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "examples/my_project/ssm2_bike/pca10056/s140/armgcc/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "examples/my_project/saadc/pca10056/blank/armgcc/CMakeFiles/saadc_pca10056.dir/DependInfo.cmake"
+  "examples/my_project/ssm2_bike/pca10056/s140/armgcc/CMakeFiles/ssm2_bike_ble_app_template_pca10056_s140.dir/DependInfo.cmake"
   )
