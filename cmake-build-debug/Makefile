@@ -117,17 +117,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named ssm2_bike_ble_app_template_pca10056_s140
+# Target rules for targets named my_ble_app_multilink_central_pca10056_s140
 
 # Build rule for target.
-ssm2_bike_ble_app_template_pca10056_s140: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ssm2_bike_ble_app_template_pca10056_s140
-.PHONY : ssm2_bike_ble_app_template_pca10056_s140
+my_ble_app_multilink_central_pca10056_s140: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 my_ble_app_multilink_central_pca10056_s140
+.PHONY : my_ble_app_multilink_central_pca10056_s140
 
 # fast build rule for target.
-ssm2_bike_ble_app_template_pca10056_s140/fast:
-	$(MAKE) $(MAKESILENT) -f examples/my_project/ssm2_bike/pca10056/s140/armgcc/CMakeFiles/ssm2_bike_ble_app_template_pca10056_s140.dir/build.make examples/my_project/ssm2_bike/pca10056/s140/armgcc/CMakeFiles/ssm2_bike_ble_app_template_pca10056_s140.dir/build
-.PHONY : ssm2_bike_ble_app_template_pca10056_s140/fast
+my_ble_app_multilink_central_pca10056_s140/fast:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/ble_app_blinky_multi_c/pca10056/s140/armgcc/CMakeFiles/my_ble_app_multilink_central_pca10056_s140.dir/build.make examples/my_project/ble_app_blinky_multi_c/pca10056/s140/armgcc/CMakeFiles/my_ble_app_multilink_central_pca10056_s140.dir/build
+.PHONY : my_ble_app_multilink_central_pca10056_s140/fast
 
 # Help Target
 help:
@@ -137,7 +137,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... ssm2_bike_ble_app_template_pca10056_s140"
+	@echo "... my_ble_app_multilink_central_pca10056_s140"
 .PHONY : help
 
 

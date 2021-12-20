@@ -6,7 +6,7 @@
 
 #define MAX_ACTS_SEQCMD 32
 
-#include "custom_board_ss2sw.h"
+//#include "custom_board_ss2sw.h"
 #include "app_scheduler.h"
 
 typedef enum

@@ -39,7 +39,7 @@ BLE_DB_DISCOVERY_ARRAY_DEF(m_db_disc, NRF_SDH_BLE_CENTRAL_LINK_COUNT);  /**< Dat
 NRF_BLE_SCAN_DEF(m_scan);                                               /**< Scanning Module instance. */
 NRF_BLE_GQ_DEF(m_ble_gatt_queue,                                        /**< BLE GATT Queue instance. */
                NRF_SDH_BLE_CENTRAL_LINK_COUNT,
-               NRF_BLE_GQ_QUEUE_SIZE);
+               NRF_BLE_GQ_QUEUE_SIZE);  //送出資訊的queue
 
 static char const m_target_periph_name[] = "Nordic_Blinky";             /**< Name of the device to try to connect to. This name is searched for in the scanning report data. */
 
@@ -91,7 +91,7 @@ static void leds_init(void)
 //如果連線錯誤，印出錯誤訊息
 static void scan_evt_handler(scan_evt_t const * p_scan_evt)
 {
-    if (zun) NRF_LOG_INFO("%s \n", __func__);
+    if (zun) NRF_LOG_INFO("%s \n", __func__)
 
     ret_code_t err_code;
 
@@ -127,7 +127,7 @@ static void scan_init(void)
 
     memset(&init_scan, 0, sizeof(init_scan));
 
-    init_scan.connect_if_match = true;
+    init_scan.connect_if_match = true;  // 符合後自己連線
     init_scan.conn_cfg_tag     = APP_BLE_CONN_CFG_TAG;
 
     err_code = nrf_ble_scan_init(&m_scan, &init_scan, scan_evt_handler);

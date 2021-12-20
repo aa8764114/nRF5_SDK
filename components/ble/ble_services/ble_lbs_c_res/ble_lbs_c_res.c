@@ -259,7 +259,7 @@ static uint32_t cccd_configure(ble_lbs_c_t * p_ble_lbs_c, bool enable)
                   p_ble_lbs_c->conn_handle);
 
     nrf_ble_gq_req_t cccd_req;
-    uint16_t         cccd_val = enable ? BLE_GATT_HVX_NOTIFICATION : 0;
+    uint16_t         cccd_val = enable ? BLE_GATT_HVX_NOTIFICATION : 0;  //if(enable>=1) -> BLE_GATT_HVX_NOTIFICATION else -> 0
     uint8_t          cccd[WRITE_MESSAGE_LENGTH];
 
     cccd[0] = LSB_16(cccd_val);
@@ -269,12 +269,12 @@ static uint32_t cccd_configure(ble_lbs_c_t * p_ble_lbs_c, bool enable)
     cccd_req.error_handler.cb            = gatt_error_handler;
     cccd_req.error_handler.p_ctx         = p_ble_lbs_c;
     cccd_req.params.gattc_write.handle   = p_ble_lbs_c->peer_lbs_db.button_cccd_handle;
-    cccd_req.params.gattc_write.len      = WRITE_MESSAGE_LENGTH;
+    cccd_req.params.gattc_write.len      = WRITE_MESSAGE_LENGTH;    //長度
     cccd_req.params.gattc_write.offset   = 0;
-    cccd_req.params.gattc_write.p_value  = cccd;
-    cccd_req.params.gattc_write.write_op = BLE_GATT_OP_WRITE_REQ;
+    cccd_req.params.gattc_write.p_value  = cccd;    //數據
+    cccd_req.params.gattc_write.write_op = BLE_GATT_OP_WRITE_REQ;   //收到的人可以決定知道怎麼回應
 
-    return nrf_ble_gq_item_add(p_ble_lbs_c->p_gatt_queue, &cccd_req, p_ble_lbs_c->conn_handle);
+    return nrf_ble_gq_item_add(p_ble_lbs_c->p_gatt_queue, &cccd_req, p_ble_lbs_c->conn_handle);   //把設定好的數據丟進祝列
 }
 
 
