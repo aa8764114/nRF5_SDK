@@ -228,13 +228,19 @@ static void nrf_qwr_error_handler(uint32_t nrf_error)
  */
 static void led_write_handler(uint16_t conn_handle, ble_lbs_t * p_lbs, uint8_t led_state)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     if (led_state)
     {
+        NRF_LOG_INFO("%s -> led_state > 0 \n", __func__)
+
         bsp_board_led_on(LEDBUTTON_LED);
         NRF_LOG_INFO("Received LED ON from link 0x%x!", conn_handle);
     }
     else
     {
+        NRF_LOG_INFO("%s -> led_state <= 0 \n", __func__)
+
         bsp_board_led_off(LEDBUTTON_LED);
         NRF_LOG_INFO("Received LED OFF from link 0x%x!", conn_handle);
     }
@@ -305,6 +311,8 @@ static void conn_params_init(void)
  */
 static void advertising_start(void)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     ret_code_t err_code;
 
     err_code = sd_ble_gap_adv_start(m_adv_handle, APP_BLE_CONN_CFG_TAG);
@@ -320,6 +328,8 @@ static void advertising_start(void)
  */
 static void on_connected(const ble_gap_evt_t * const p_gap_evt)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     ret_code_t  err_code;
     uint32_t    periph_link_cnt = ble_conn_state_peripheral_conn_count(); // Number of peripheral links.    幾個外圍設備
 
@@ -344,11 +354,15 @@ static void on_connected(const ble_gap_evt_t * const p_gap_evt)
     bsp_board_led_on(CONNECTED_LED);    //如果有裝置連線，就亮LED
     if (periph_link_cnt == NRF_SDH_BLE_PERIPHERAL_LINK_COUNT)   //如果連線的中心裝置數量＝＝設定的連線數，就關閉廣播LED（內部應該會自己把廣播關掉）
     {
+        NRF_LOG_INFO("%s -> 連線的中心裝置數量＝設定的連線數，關閉廣播 \n", __func__)
+
         //看來連線數量到指定數量，廣播會自動關，但是要開廣播的情況要自己設定
         bsp_board_led_off(ADVERTISING_LED);
     }
     else    //如果連線的中心裝置數量！＝設定的連線數，就打開廣播
     {
+        NRF_LOG_INFO("%s -> 如果連線的中心裝置數量！＝設定的連線數，打開廣播 \n", __func__)
+
         // Continue advertising. More connections can be established because the maximum link count has not been reached.
         //看來連線數量到指定數量，廣播會自動關，但是要開廣播的情況要自己設定
         advertising_start();
@@ -362,6 +376,8 @@ static void on_connected(const ble_gap_evt_t * const p_gap_evt)
  */
 static void on_disconnected(ble_gap_evt_t const * const p_gap_evt)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     ret_code_t  err_code;
     uint32_t    periph_link_cnt = ble_conn_state_peripheral_conn_count(); // Number of peripheral links.
 
@@ -396,14 +412,20 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
+            NRF_LOG_INFO("%s -> BLE_GAP_EVT_CONNECTED \n", __func__)
+
             on_connected(&p_ble_evt->evt.gap_evt);
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
+            NRF_LOG_INFO("%s -> BLE_GAP_EVT_DISCONNECTED \n", __func__)
+
             on_disconnected(&p_ble_evt->evt.gap_evt);
             break;
 
         case BLE_GAP_EVT_SEC_PARAMS_REQUEST:
+            NRF_LOG_INFO("%s -> BLE_GAP_EVT_SEC_PARAMS_REQUEST \n", __func__)
+
             // Pairing not supported
             err_code = sd_ble_gap_sec_params_reply(p_ble_evt->evt.gap_evt.conn_handle,
                                                    BLE_GAP_SEC_STATUS_PAIRING_NOT_SUPP,
@@ -414,6 +436,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
+            NRF_LOG_INFO("%s -> BLE_GAP_EVT_PHY_UPDATE_REQUEST \n", __func__)
+
             NRF_LOG_DEBUG("PHY update request.");
             ble_gap_phys_t const phys =
             {
@@ -425,12 +449,16 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
         } break;
 
         case BLE_GATTS_EVT_SYS_ATTR_MISSING:
+            NRF_LOG_INFO("%s -> BLE_GATTS_EVT_SYS_ATTR_MISSING \n", __func__)
+
             // No system attributes have been stored.
             err_code = sd_ble_gatts_sys_attr_set(p_ble_evt->evt.gap_evt.conn_handle, NULL, 0, 0);
             APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_GATTC_EVT_TIMEOUT:
+            NRF_LOG_INFO("%s -> BLE_GATTC_EVT_TIMEOUT \n", __func__)
+
             // Disconnect on GATT Client timeout event.
             NRF_LOG_DEBUG("GATT Client Timeout.");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gattc_evt.conn_handle,
@@ -439,6 +467,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             break;
 
         case BLE_GATTS_EVT_TIMEOUT:
+            NRF_LOG_INFO("%s -> BLE_GATTS_EVT_TIMEOUT \n", __func__)
+
             // Disconnect on GATT Server timeout event.
             NRF_LOG_DEBUG("GATT Server Timeout.");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gatts_evt.conn_handle,
@@ -491,11 +521,14 @@ static void ble_stack_init(void)
  */
 static uint32_t led_status_send_to_all(uint8_t button_action)
 {
-    ret_code_t                        err_code;
-    ble_conn_state_conn_handle_list_t conn_handles = ble_conn_state_periph_handles();
+    NRF_LOG_INFO("%s\n", __func__)
 
-    for (uint8_t i = 0; i < conn_handles.len; i++)
+    ret_code_t                        err_code;
+    ble_conn_state_conn_handle_list_t conn_handles = ble_conn_state_periph_handles(); //拿到所有外圍設備的handle
+
+    for (uint8_t i = 0; i < conn_handles.len; i++) //用迴圈跑過這些handle
     {
+        //透過handle編號送出訊息給各外圍設備
         err_code = ble_lbs_on_button_change(conn_handles.conn_handles[i], &m_lbs, button_action);
 
         if (err_code != NRF_SUCCESS &&
@@ -519,6 +552,8 @@ static uint32_t led_status_send_to_all(uint8_t button_action)
 //送出資料到各個訂閱的裝置
 static void button_event_handler(uint8_t pin_no, uint8_t button_action)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     ret_code_t err_code;
 
     switch (pin_no)

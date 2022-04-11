@@ -21,7 +21,7 @@
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 
-#define zun 0
+#define zun 1
 
 #define APP_BLE_CONN_CFG_TAG      1                                     /**< Tag that refers to the BLE stack configuration that is set with @ref sd_ble_cfg_set. The default tag is @ref APP_BLE_CONN_CFG_TAG. */
 #define APP_BLE_OBSERVER_PRIO     3                                     /**< BLE observer priority of the application. There is no need to modify this value. */
@@ -127,7 +127,7 @@ static void scan_init(void)
 
     memset(&init_scan, 0, sizeof(init_scan));
 
-    init_scan.connect_if_match = true;  // 符合後自己連線
+    init_scan.connect_if_match = true;  //名字符合後自己連線
     init_scan.conn_cfg_tag     = APP_BLE_CONN_CFG_TAG;
 
     err_code = nrf_ble_scan_init(&m_scan, &init_scan, scan_evt_handler);

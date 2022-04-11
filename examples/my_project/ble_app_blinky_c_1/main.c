@@ -59,8 +59,8 @@ static void scan_start(void) {
     APP_ERROR_CHECK(nrf_ble_scan_start(&m_scan));
 }
 
-//不知道ble_lbs_c_evt_t這個結構是幹嘛的
 //只知道透過他可以拿到外圍設備送來的資料
+//在ble_sesame_c裡的ble_lbs_c_on_ble_evt觸發BLE_GATTC_EVT_HVX->on_hvx 用callback到這個函數
 static void lbs_c_evt_handler(ble_lbs_c_t *p_lbs_c, ble_lbs_c_evt_t *p_lbs_c_evt) {
     switch (p_lbs_c_evt->evt_type) {
 //        case BLE_LBS_C_EVT_DISCOVERY_COMPLETE: {
@@ -78,6 +78,8 @@ static void lbs_c_evt_handler(ble_lbs_c_t *p_lbs_c, ble_lbs_c_evt_t *p_lbs_c_evt
 //        }
 //            break; // BLE_LBS_C_EVT_DISCOVERY_COMPLETE
 
+
+//      BLE_GATTC_EVT_HVX：也會同時觸發
         case BLE_LBS_C_EVT_BUTTON_NOTIFICATION: {
             NRF_LOG_INFO("[收][%x]", p_lbs_c_evt->params.button.button_state);
             if (p_lbs_c_evt->params.button.button_state)
@@ -109,8 +111,9 @@ static void ble_evt_handler(ble_evt_t const *p_ble_evt, void *p_context) {
             NRF_LOG_INFO("[%x][b][discovery]->", p_gap_evt->conn_handle);
 
             //m_ble_lbs_c變數在最一開始就透過define就建立了，並且同時也開好了同名的監聽
+            //m_ble_lbs_c：記錄中心設備的相關資料
             ble_lbs_c_handles_assign(&m_ble_lbs_c, p_gap_evt->conn_handle, NULL);
-            err_code = ble_lbs_c_button_notif_enable(&m_ble_lbs_c);
+            err_code = ble_lbs_c_button_notif_enable(&m_ble_lbs_c); //開啟cccd（要是中心設備資料的結構才能開）
 
             bsp_board_led_on(CENTRAL_CONNECTED_LED);
             bsp_board_led_off(CENTRAL_SCANNING_LED);
@@ -197,8 +200,8 @@ static void ble_stack_init(void) {
 
 static void button_event_handler(uint8_t pin_no, uint8_t button_action) {
     NRF_LOG_INFO("[發][%d]", button_action);
-    NRF_LOG_INFO("m_ble_lbs_c.conn_handle:%x", m_ble_lbs_c.conn_handle);    //不知道是從啥時拿到這個handle編號
-    ret_code_t err_code = ble_lbs_led_status_send(&m_ble_lbs_c, button_action);
+    NRF_LOG_INFO("m_ble_lbs_c.conn_handle:%x", m_ble_lbs_c.conn_handle);    //連線時就把conn_handle抄進去了
+    ret_code_t err_code = ble_lbs_led_status_send(&m_ble_lbs_c, button_action); //把資料送給外圍設備（m_ble_lbs_c有送資料所需的東西）
     APP_ERROR_CHECK(err_code);
 }
 
@@ -235,7 +238,7 @@ static void buttons_init(void) {
 static void scan_init(void) {
     ret_code_t err_code;
     nrf_ble_scan_init_t init_scan = {0};
-    init_scan.connect_if_match = true;
+    init_scan.connect_if_match = true; //名字符合後自己連線
     init_scan.conn_cfg_tag = APP_BLE_CONN_CFG_TAG;
     err_code = nrf_ble_scan_init(&m_scan, &init_scan, scan_evt_handler);
     APP_ERROR_CHECK(err_code);

@@ -44,8 +44,8 @@ EOF
 
 #/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/components/ble_ssm2
 #./examples/my_project/ssm2_bike
-#./examples/Sumair_Tutorial/13.rtc
-for makefile in `\find ./examples/my_project/ble_app_blinky_DFU_sched -name Makefile` ; do
+#./examples/Sumair_Tutorial/15_low_power_pwm
+for makefile in `\find ./examples/my_project/ble_app_blinky_multi_c -name Makefile` ; do
     dir=`\dirname ${makefile}`
     \echo "Creating CMakeLists.txt for ${makefile}"
     \pushd ${dir} > /dev/null

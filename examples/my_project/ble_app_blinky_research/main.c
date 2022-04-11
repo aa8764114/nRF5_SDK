@@ -51,7 +51,7 @@
 
 #define DEAD_BEEF                       0xDEADBEEF                              /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
-//for多幾連線
+//for多機連線
 #define LINK_TOTAL                      NRF_SDH_BLE_PERIPHERAL_LINK_COUNT + \
                                         NRF_SDH_BLE_CENTRAL_LINK_COUNT
 
@@ -82,12 +82,14 @@ static ble_gap_adv_data_t m_adv_data =
 
 void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 {
+    NRF_LOG_INFO("%s\n", __func__)
     app_error_handler(DEAD_BEEF, line_num, p_file_name);
 }
 
 
 static void gap_params_init(void)
 {
+    NRF_LOG_INFO("%s\n", __func__)
     ret_code_t              err_code;
     ble_gap_conn_params_t   gap_conn_params;
     ble_gap_conn_sec_mode_t sec_mode;
@@ -112,6 +114,7 @@ static void gap_params_init(void)
 
 static void advertising_init(void)
 {
+    NRF_LOG_INFO("%s\n", __func__)
     ret_code_t    err_code;
     ble_advdata_t advdata;  //藍牙廣播送的資料（這個結構有定好格式）
     ble_advdata_t srdata;   //有裝置掃描後廣播送的資料（格式跟上面一樣）
@@ -174,12 +177,16 @@ static void advertising_init(void)
 
 static void nrf_qwr_error_handler(uint32_t nrf_error)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     APP_ERROR_HANDLER(nrf_error);
 }
 
 //單機連線
 static void led_write_handler(uint16_t conn_handle, ble_lbs_t * p_lbs, uint8_t led_state)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     if (led_state)
     {
         bsp_board_led_on(LEDBUTTON_LED);
@@ -197,6 +204,8 @@ static void led_write_handler(uint16_t conn_handle, ble_lbs_t * p_lbs, uint8_t l
 //單機連線
 static void services_init(void)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     ret_code_t         err_code;
     ble_lbs_init_t     init     = {0};
     nrf_ble_qwr_init_t qwr_init = {0};
@@ -217,6 +226,8 @@ static void services_init(void)
 
 static void on_conn_params_evt(ble_conn_params_evt_t * p_evt)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     ret_code_t err_code;
 
     if (p_evt->evt_type == BLE_CONN_PARAMS_EVT_FAILED)
@@ -229,12 +240,16 @@ static void on_conn_params_evt(ble_conn_params_evt_t * p_evt)
 
 static void conn_params_error_handler(uint32_t nrf_error)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     APP_ERROR_HANDLER(nrf_error);
 }
 
 
 static void conn_params_init(void)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     ret_code_t             err_code;
     ble_conn_params_init_t cp_init;
 
@@ -256,6 +271,8 @@ static void conn_params_init(void)
 
 static void advertising_start(void)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     ret_code_t           err_code;
 
     err_code = sd_ble_gap_adv_start(m_adv_handle, APP_BLE_CONN_CFG_TAG);
@@ -265,18 +282,22 @@ static void advertising_start(void)
 }
 
 
-
+//藍芽監聽事件回應動作
 static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     ret_code_t err_code;
 
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
+            NRF_LOG_INFO("\t%s -> BLE_GAP_EVT_CONNECTED \n", __func__)
+
             NRF_LOG_INFO("Connected");
             bsp_board_led_on(CONNECTED_LED);
             bsp_board_led_off(ADVERTISING_LED);
-            m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
+            m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle; //連線後拿到handle編號
             err_code = nrf_ble_qwr_conn_handle_assign(&m_qwr, m_conn_handle);
             APP_ERROR_CHECK(err_code);
             err_code = app_button_enable();
@@ -284,6 +305,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
+            NRF_LOG_INFO("\t%s -> BLE_GAP_EVT_DISCONNECTED \n", __func__)
+
             NRF_LOG_INFO("Disconnected");
             bsp_board_led_off(CONNECTED_LED);
             m_conn_handle = BLE_CONN_HANDLE_INVALID;
@@ -293,6 +316,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             break;
 
         case BLE_GAP_EVT_SEC_PARAMS_REQUEST:
+            NRF_LOG_INFO("\t%s -> BLE_GAP_EVT_SEC_PARAMS_REQUEST \n", __func__)
+
             // Pairing not supported
             err_code = sd_ble_gap_sec_params_reply(m_conn_handle,
                                                    BLE_GAP_SEC_STATUS_PAIRING_NOT_SUPP,
@@ -303,6 +328,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
+            NRF_LOG_INFO("\t%s -> BLE_GAP_EVT_PHY_UPDATE_REQUEST \n", __func__)
+
             NRF_LOG_DEBUG("PHY update request.");
             ble_gap_phys_t const phys =
             {
@@ -314,12 +341,16 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
         } break;
 
         case BLE_GATTS_EVT_SYS_ATTR_MISSING:
+            NRF_LOG_INFO("\t%s -> BLE_GATTS_EVT_SYS_ATTR_MISSING \n", __func__)
+
             // No system attributes have been stored.
             err_code = sd_ble_gatts_sys_attr_set(m_conn_handle, NULL, 0, 0);
             APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_GATTC_EVT_TIMEOUT:
+            NRF_LOG_INFO("\t%s -> BLE_GATTC_EVT_TIMEOUT \n", __func__)
+
             // Disconnect on GATT Client timeout event.
             NRF_LOG_DEBUG("GATT Client Timeout.");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gattc_evt.conn_handle,
@@ -328,6 +359,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             break;
 
         case BLE_GATTS_EVT_TIMEOUT:
+            NRF_LOG_INFO("\t%s -> BLE_GATTS_EVT_TIMEOUT \n", __func__)
+
             // Disconnect on GATT Server timeout event.
             NRF_LOG_DEBUG("GATT Server Timeout.");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gatts_evt.conn_handle,
@@ -346,6 +379,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 
 static void ble_stack_init(void)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     ret_code_t err_code;
 
     err_code = nrf_sdh_enable_request();
@@ -369,6 +404,8 @@ static void ble_stack_init(void)
 
 static void button_event_handler(uint8_t pin_no, uint8_t button_action)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     ret_code_t err_code;
 
     switch (pin_no)
@@ -394,6 +431,8 @@ static void button_event_handler(uint8_t pin_no, uint8_t button_action)
 
 static void buttons_init(void)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     //The array must be static because a pointer to it will be saved in the button handler module.
     //如果有多個按鈕在這邊設定
     //    app_button_cfg_t
@@ -423,6 +462,8 @@ static void idle_state_handle(void)
 
 int main(void)
 {
+    NRF_LOG_INFO("%s\n", __func__)
+
     // Initialize.
     NRF_LOG_INIT(NULL);     // log_init();
     NRF_LOG_DEFAULT_BACKENDS_INIT();    //log_init();

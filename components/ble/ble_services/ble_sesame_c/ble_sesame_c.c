@@ -35,7 +35,7 @@ static void on_hvx(ble_lbs_c_t *p_ble_lbs_c, ble_evt_t const *p_ble_evt) {
     ble_lbs_c_evt.evt_type = BLE_LBS_C_EVT_BUTTON_NOTIFICATION;
     ble_lbs_c_evt.conn_handle = p_ble_lbs_c->conn_handle;
     ble_lbs_c_evt.params.button.button_state = p_ble_evt->evt.gattc_evt.params.hvx.data[0];
-    p_ble_lbs_c->evt_handler(p_ble_lbs_c, &ble_lbs_c_evt);  //不知道這邊的函數是從哪放進去的
+    p_ble_lbs_c->evt_handler(p_ble_lbs_c, &ble_lbs_c_evt);  //這個是在main.c裡的lbs_c_init放進lbs_c_evt_handler的
 }
 
 
@@ -151,6 +151,7 @@ void ble_lbs_c_on_ble_evt(ble_evt_t const *p_ble_evt, void *p_context) {
     ble_lbs_c_t *p_ble_lbs_c = (ble_lbs_c_t *) p_context;
 
     switch (p_ble_evt->header.evt_id) {
+
         case BLE_GATTC_EVT_HVX: //外圍設備按按鈕
             on_hvx(p_ble_lbs_c, p_ble_evt);
             break;
@@ -206,7 +207,7 @@ uint32_t ble_lbs_led_status_send(ble_lbs_c_t *p_ble_lbs_c, uint8_t status) {
         return NRF_ERROR_INVALID_STATE;
     }
 
-
+    //利用cccd送資料所需的參數填在write_req
     nrf_ble_gq_req_t write_req;
 
     memset(&write_req, 0, sizeof(nrf_ble_gq_req_t));
