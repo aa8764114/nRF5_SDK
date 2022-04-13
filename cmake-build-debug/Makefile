@@ -117,17 +117,30 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named my_ble_app_multilink_central_pca10056_s140
+# Target rules for targets named twi_sensor_pca10040
 
 # Build rule for target.
-my_ble_app_multilink_central_pca10056_s140: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 my_ble_app_multilink_central_pca10056_s140
-.PHONY : my_ble_app_multilink_central_pca10056_s140
+twi_sensor_pca10040: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 twi_sensor_pca10040
+.PHONY : twi_sensor_pca10040
 
 # fast build rule for target.
-my_ble_app_multilink_central_pca10056_s140/fast:
-	$(MAKE) $(MAKESILENT) -f examples/my_project/ble_app_blinky_multi_c/pca10056/s140/armgcc/CMakeFiles/my_ble_app_multilink_central_pca10056_s140.dir/build.make examples/my_project/ble_app_blinky_multi_c/pca10056/s140/armgcc/CMakeFiles/my_ble_app_multilink_central_pca10056_s140.dir/build
-.PHONY : my_ble_app_multilink_central_pca10056_s140/fast
+twi_sensor_pca10040/fast:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/twi_sensor/pca10040/blank/armgcc/CMakeFiles/twi_sensor_pca10040.dir/build.make examples/my_project/twi_sensor/pca10040/blank/armgcc/CMakeFiles/twi_sensor_pca10040.dir/build
+.PHONY : twi_sensor_pca10040/fast
+
+#=============================================================================
+# Target rules for targets named twi_sensor_pca10056
+
+# Build rule for target.
+twi_sensor_pca10056: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 twi_sensor_pca10056
+.PHONY : twi_sensor_pca10056
+
+# fast build rule for target.
+twi_sensor_pca10056/fast:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/twi_sensor/pca10056/blank/armgcc/CMakeFiles/twi_sensor_pca10056.dir/build.make examples/my_project/twi_sensor/pca10056/blank/armgcc/CMakeFiles/twi_sensor_pca10056.dir/build
+.PHONY : twi_sensor_pca10056/fast
 
 # Help Target
 help:
@@ -137,7 +150,8 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... my_ble_app_multilink_central_pca10056_s140"
+	@echo "... twi_sensor_pca10040"
+	@echo "... twi_sensor_pca10056"
 .PHONY : help
 
 

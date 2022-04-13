@@ -1,0 +1,2 @@
+# Empty dependencies file for twi_sensor_pca10040.
+# This may be replaced when dependencies are built.
