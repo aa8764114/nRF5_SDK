@@ -1,8 +1,8 @@
 /Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/CMakeFiles/rebuild_cache.dir
 /Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/twi_sensor/pca10040/blank/armgcc/CMakeFiles/rebuild_cache.dir
-/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/twi_sensor/pca10040/blank/armgcc/CMakeFiles/edit_cache.dir
-/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/twi_sensor/pca10040/blank/armgcc/CMakeFiles/twi_sensor_pca10040.dir
-/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/twi_sensor/pca10056/blank/armgcc/CMakeFiles/rebuild_cache.dir
-/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/twi_sensor/pca10056/blank/armgcc/CMakeFiles/edit_cache.dir
-/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/twi_sensor/pca10056/blank/armgcc/CMakeFiles/twi_sensor_pca10056.dir
+/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/adafruit_tag_reader/pca10040/blank/armgcc/CMakeFiles/rebuild_cache.dir
+/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/adafruit_tag_reader/pca10040/blank/armgcc/CMakeFiles/edit_cache.dir
+/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/adafruit_tag_reader/pca10040/blank/armgcc/CMakeFiles/adafruit_tag_reader_pca10040.dir
+/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/adafruit_tag_reader/pca10056/blank/armgcc/CMakeFiles/rebuild_cache.dir
+/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/adafruit_tag_reader/pca10056/blank/armgcc/CMakeFiles/edit_cache.dir
+/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/adafruit_tag_reader/pca10056/blank/armgcc/CMakeFiles/adafruit_tag_reader_pca10056.dir

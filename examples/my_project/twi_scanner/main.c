@@ -50,7 +50,6 @@ void twi_init (void)
     nrf_drv_twi_enable(&m_twi); //開啟TWI
 }
 
-
 /**
  * @brief Function for main application entry.
  */
@@ -58,7 +57,7 @@ int main(void)
 {
     ret_code_t err_code;
     uint8_t address;
-    uint8_t sample_data = 0;
+    uint8_t sample_data[7];
     bool detected_device = false;
 
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
@@ -71,12 +70,12 @@ int main(void)
     for (address = 1; address <= TWI_ADDRESSES; address++)
     {
         //瘋狂一個個位址讀東西，如果成功代表位址有用
-        err_code = nrf_drv_twi_rx(&m_twi, address, &sample_data, sizeof(sample_data));
+        err_code = nrf_drv_twi_rx(&m_twi, address, sample_data, sizeof(sample_data));
         if (err_code == NRF_SUCCESS)
         {
             detected_device = true;
             NRF_LOG_INFO("TWI device detected at address 0x%x.", address);
-            NRF_LOG_INFO("sample_data:%d\n", sample_data)
+            NRF_LOG_INFO("sample_data:0x%x\n", sample_data[3])
         }
         NRF_LOG_FLUSH();
     }

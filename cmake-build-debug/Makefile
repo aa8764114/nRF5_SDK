@@ -117,30 +117,30 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named twi_sensor_pca10040
+# Target rules for targets named adafruit_tag_reader_pca10040
 
 # Build rule for target.
-twi_sensor_pca10040: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 twi_sensor_pca10040
-.PHONY : twi_sensor_pca10040
+adafruit_tag_reader_pca10040: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 adafruit_tag_reader_pca10040
+.PHONY : adafruit_tag_reader_pca10040
 
 # fast build rule for target.
-twi_sensor_pca10040/fast:
-	$(MAKE) $(MAKESILENT) -f examples/my_project/twi_sensor/pca10040/blank/armgcc/CMakeFiles/twi_sensor_pca10040.dir/build.make examples/my_project/twi_sensor/pca10040/blank/armgcc/CMakeFiles/twi_sensor_pca10040.dir/build
-.PHONY : twi_sensor_pca10040/fast
+adafruit_tag_reader_pca10040/fast:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/adafruit_tag_reader/pca10040/blank/armgcc/CMakeFiles/adafruit_tag_reader_pca10040.dir/build.make examples/my_project/adafruit_tag_reader/pca10040/blank/armgcc/CMakeFiles/adafruit_tag_reader_pca10040.dir/build
+.PHONY : adafruit_tag_reader_pca10040/fast
 
 #=============================================================================
-# Target rules for targets named twi_sensor_pca10056
+# Target rules for targets named adafruit_tag_reader_pca10056
 
 # Build rule for target.
-twi_sensor_pca10056: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 twi_sensor_pca10056
-.PHONY : twi_sensor_pca10056
+adafruit_tag_reader_pca10056: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 adafruit_tag_reader_pca10056
+.PHONY : adafruit_tag_reader_pca10056
 
 # fast build rule for target.
-twi_sensor_pca10056/fast:
-	$(MAKE) $(MAKESILENT) -f examples/my_project/twi_sensor/pca10056/blank/armgcc/CMakeFiles/twi_sensor_pca10056.dir/build.make examples/my_project/twi_sensor/pca10056/blank/armgcc/CMakeFiles/twi_sensor_pca10056.dir/build
-.PHONY : twi_sensor_pca10056/fast
+adafruit_tag_reader_pca10056/fast:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/adafruit_tag_reader/pca10056/blank/armgcc/CMakeFiles/adafruit_tag_reader_pca10056.dir/build.make examples/my_project/adafruit_tag_reader/pca10056/blank/armgcc/CMakeFiles/adafruit_tag_reader_pca10056.dir/build
+.PHONY : adafruit_tag_reader_pca10056/fast
 
 # Help Target
 help:
@@ -150,8 +150,8 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... twi_sensor_pca10040"
-	@echo "... twi_sensor_pca10056"
+	@echo "... adafruit_tag_reader_pca10040"
+	@echo "... adafruit_tag_reader_pca10056"
 .PHONY : help
 
 

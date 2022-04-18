@@ -7,7 +7,7 @@ CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):
   CMake that the project does not need compatibility with older versions.
 
 
-CMake Deprecation Warning at examples/my_project/twi_sensor/pca10040/blank/armgcc/CMakeLists.txt:15 (cmake_minimum_required):
+CMake Deprecation Warning at examples/my_project/adafruit_tag_reader/pca10040/blank/armgcc/CMakeLists.txt:15 (cmake_minimum_required):
   Compatibility with CMake < 2.8.12 will be removed from a future version of
   CMake.
 
@@ -15,7 +15,7 @@ CMake Deprecation Warning at examples/my_project/twi_sensor/pca10040/blank/armgc
   CMake that the project does not need compatibility with older versions.
 
 
-CMake Deprecation Warning at examples/my_project/twi_sensor/pca10056/blank/armgcc/CMakeLists.txt:15 (cmake_minimum_required):
+CMake Deprecation Warning at examples/my_project/adafruit_tag_reader/pca10056/blank/armgcc/CMakeLists.txt:15 (cmake_minimum_required):
   Compatibility with CMake < 2.8.12 will be removed from a future version of
   CMake.
 
