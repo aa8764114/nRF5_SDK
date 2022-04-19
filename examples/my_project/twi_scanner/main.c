@@ -57,7 +57,7 @@ int main(void)
 {
     ret_code_t err_code;
     uint8_t address;
-    uint8_t sample_data[7];
+    uint8_t sample_data[10];
     bool detected_device = false;
 
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
@@ -75,7 +75,11 @@ int main(void)
         {
             detected_device = true;
             NRF_LOG_INFO("TWI device detected at address 0x%x.", address);
-            NRF_LOG_INFO("sample_data:0x%x\n", sample_data[3])
+
+            for(int i = 0; i < sizeof(sample_data) ; i++)
+            {
+                NRF_LOG_INFO("sample_data:0x%x\n", sample_data[i])
+            }
         }
         NRF_LOG_FLUSH();
     }

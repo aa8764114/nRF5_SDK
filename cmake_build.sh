@@ -45,7 +45,7 @@ EOF
 #/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/components/ble_ssm2
 #./examples/my_project/ssm2_bike
 #./examples/Sumair_Tutorial/15_low_power_pwm
-for makefile in `\find ./examples/my_project/adafruit_tag_reader -name Makefile` ; do
+for makefile in `\find ./examples/my_project/TLX493D -name Makefile` ; do
     dir=`\dirname ${makefile}`
     \echo "Creating CMakeLists.txt for ${makefile}"
     \pushd ${dir} > /dev/null
