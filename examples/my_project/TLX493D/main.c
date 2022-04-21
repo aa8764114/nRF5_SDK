@@ -4,6 +4,7 @@
 #include "app_error.h"
 #include "nrf_drv_twi.h"
 #include "nrf_delay.h"
+#include "math.h"
 
 
 
@@ -24,10 +25,14 @@
 #define SDA_PIN 26
 #define INT_PIN 2
 
+#define PI  3.14159265358979f
+
 /* TWI instance. */
 //nRF52有兩組I2C(TWI)要開哪一個
 static const nrf_drv_twi_t m_twi = NRF_DRV_TWI_INSTANCE(TWI_INSTANCE_ID);//開 TWI0
 
+/* Indicates if operation on TWI has ended. */
+static volatile bool m_xfer_done = false;
 
 ret_code_t TLI493D_twi_init (void)
 {
@@ -79,14 +84,7 @@ ret_code_t TLI493D_init()
         NRF_LOG_INFO("Failed to create I2C, err_code = %d", err_code);
         return err_code;
     }
-
-    //等0.1s
-    nrf_delay_ms(100);
-
-    //reset sensor
-//    uint8_t reg = 0x00;
-//    err_code = nrf_drv_twi_tx(&m_twi, 0x00, &reg, sizeof(reg), false);
-//    APP_ERROR_CHECK(err_code);
+    nrf_delay_ms(50);    //等50ms
 
     err_code = set_mode();
     APP_ERROR_CHECK(err_code);
@@ -94,15 +92,7 @@ ret_code_t TLI493D_init()
     //設定軟體操控按鍵
     TLI493D_pin_setup();
 
-    //等0.1s
-    nrf_delay_ms(100);
-
-    //觸發第一個測量
-    uint8_t reg2 = 0b00100000;
-    err_code = nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, &reg2, sizeof(reg2), false);
-    APP_ERROR_CHECK(err_code);
-    nrf_delay_ms(100);
-
+    nrf_delay_ms(50);    //等50ms
     return NRF_SUCCESS;
 }
 
@@ -111,57 +101,37 @@ ret_code_t TLI493D_data_read()
     ret_code_t err_code;
     // In case of I2C, read the additional status byte.
     uint8_t buf[7];
+    int degree = 0;
 
-    NRF_LOG_INFO("Reading (%d bytes): ", sizeof(buf));
-    err_code = nrf_drv_twi_rx(&m_twi, TLI493D_ADDRESS, buf, sizeof(buf));
-    if (err_code != NRF_SUCCESS)
-    {
-        NRF_LOG_INFO("Failed while calling TWI rx, err_code = %d", err_code);
-        return err_code;
-    }
-//    else
-//    {
-//        for(int i = 0; i < sizeof(buf) ; i++)
-//        {
-//            NRF_LOG_INFO("sample_data:0x%x\n", buf[i])
-//        }
-//    }
+    //送出設定值觸發開始測量
+    uint8_t reg2 = 0b00100000;
+    err_code = nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, &reg2, sizeof(reg2), false);
+    APP_ERROR_CHECK(err_code);
 
+//    NRF_LOG_INFO("Reading (%d bytes): ", sizeof(buf));
+    nrf_drv_twi_rx(&m_twi, TLI493D_ADDRESS, buf, sizeof(buf));
     // Built 12 bit data
     int16_t X = (int16_t)((buf[0] << 8) | (buf[4] & 0xF0)) >> 4;
     int16_t Y = (int16_t)((buf[1] << 8) | ((buf[4] & 0x0F) << 4)) >> 4;
-    int16_t Z = (int16_t)((buf[2] << 8) | ((buf[5] & 0x0F) << 4)) >> 4;
-    uint16_t T = (buf[3] << 4) | (buf[5] >> 4);
-
-    NRF_LOG_INFO("X:%d Y:%d Z:%d T:%d", X, Y, Z, T);
+    degree = ((atan2(Y, X)*360)/(2*PI))+180;
+    NRF_LOG_INFO("degree:%d", degree)
 
     return NRF_SUCCESS;
 }
 
 
-/**
- * @brief Function for main application entry.
- */
 int main(void)
 {
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
     NRF_LOG_DEFAULT_BACKENDS_INIT();
-
     NRF_LOG_INFO("TWI scanner started.");
-    NRF_LOG_FLUSH();
-
     APP_ERROR_CHECK(TLI493D_init());
-    APP_ERROR_CHECK(TLI493D_data_read());
-
-
     NRF_LOG_FLUSH();
-
 
     while (true)
     {
-//        APP_ERROR_CHECK(TLI493D_data_read());
-        /* Empty loop. */
+        nrf_delay_ms(50);
+        APP_ERROR_CHECK(TLI493D_data_read());
+        NRF_LOG_FLUSH();
     }
 }
-
-/** @} */
