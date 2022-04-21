@@ -47,8 +47,19 @@ void TLI493D_twi_init (void)
 
 void set_mode()
 {
+    //抄Arduino範例程式
     uint8_t reg[3] = {0x10, 0b00000000, 0b00011001};
     nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg, sizeof(reg), false);
+
+    //禁用Ｚ偵測、溫度偵測
+    //Infineon-TLI_493D-W2BW-UserManual-v01_10-EN.pdf 第9頁
+    uint8_t reg2[2] = {0x10, 0b11000000};
+    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg2, sizeof(reg2), false);
+
+    //Low Power Mode update rate
+    //Infineon-TLI_493D-W2BW-UserManual-v01_10-EN.pdf 第13頁
+    uint8_t reg3[2] = {0x13, 0b111};
+    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg3, sizeof(reg3), false);
 }
 
 void TLI493D_pin_setup()
@@ -78,6 +89,7 @@ void TLI493D_data_read()
     int16_t Y = (int16_t)((buf[1] << 8) | ((buf[4] & 0x0F) << 4)) >> 4;
 //    int16_t Z = (int16_t)((buf[2] << 8) | ((buf[5] & 0x0F) << 4)) >> 4;
 //    uint16_t T = (buf[3] << 4) | (buf[5] >> 4);
+//    NRF_LOG_INFO("X:%d Y:%d Z:%d T:%d", X, Y, Z, T)
 
     //把解析數據轉角度
     int degree = 0;
