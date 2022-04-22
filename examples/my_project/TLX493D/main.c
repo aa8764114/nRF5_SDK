@@ -47,19 +47,25 @@ void TLI493D_twi_init (void)
 
 void set_mode()
 {
-    //抄Arduino範例程式
-    uint8_t reg[3] = {0x10, 0b00000000, 0b00011001};
-    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg, sizeof(reg), false);
-
     //禁用Ｚ偵測、溫度偵測
     //Infineon-TLI_493D-W2BW-UserManual-v01_10-EN.pdf 第9頁
-    uint8_t reg2[2] = {0x10, 0b11000000};
-    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg2, sizeof(reg2), false);
+//    uint8_t reg2[2] = {0x10, 0b11000000};
+//    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg2, sizeof(reg2), false);
 
     //Low Power Mode update rate
     //Infineon-TLI_493D-W2BW-UserManual-v01_10-EN.pdf 第13頁
     uint8_t reg3[2] = {0x13, 0b111};
     nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg3, sizeof(reg3), false);
+
+    //要設定X2跟X4這兩個空間->設定磁場偵測範圍
+    //因為X2的暫存器空間也在0x10，所以可以把它跟禁用Ｚ偵測、溫度偵測的指令合併
+    //0b11000000:禁用Ｚ偵測、溫度偵測（Infineon-TLI_493D-W2BW-UserManual-v01_10-EN.pdf 第9頁）
+    //0b00001000:X2->1（Infineon-TLI_493D-W2BW-UserManual-v01_10-EN.pdf 第10頁）
+    uint8_t reg4[2] = {0x10, (0b11000000|0b00001000)};
+    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg4, sizeof(reg4), false);
+
+    uint8_t reg5[2] = {0x14, 0b1};  //X4->1
+    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg5, sizeof(reg5), false);
 }
 
 void TLI493D_pin_setup()
