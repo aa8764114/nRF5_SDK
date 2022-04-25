@@ -117,30 +117,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named twi_scanner_pca10040
+# Target rules for targets named low_power_pwm_pca10040
 
 # Build rule for target.
-twi_scanner_pca10040: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 twi_scanner_pca10040
-.PHONY : twi_scanner_pca10040
+low_power_pwm_pca10040: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 low_power_pwm_pca10040
+.PHONY : low_power_pwm_pca10040
 
 # fast build rule for target.
-twi_scanner_pca10040/fast:
-	$(MAKE) $(MAKESILENT) -f examples/my_project/TLX493D/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/build.make examples/my_project/TLX493D/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/build
-.PHONY : twi_scanner_pca10040/fast
-
-#=============================================================================
-# Target rules for targets named twi_scanner_pca10056
-
-# Build rule for target.
-twi_scanner_pca10056: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 twi_scanner_pca10056
-.PHONY : twi_scanner_pca10056
-
-# fast build rule for target.
-twi_scanner_pca10056/fast:
-	$(MAKE) $(MAKESILENT) -f examples/my_project/TLX493D/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/build.make examples/my_project/TLX493D/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/build
-.PHONY : twi_scanner_pca10056/fast
+low_power_pwm_pca10040/fast:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/build.make examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/build
+.PHONY : low_power_pwm_pca10040/fast
 
 # Help Target
 help:
@@ -150,8 +137,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... twi_scanner_pca10040"
-	@echo "... twi_scanner_pca10056"
+	@echo "... low_power_pwm_pca10040"
 .PHONY : help
 
 

@@ -1,8 +1,5 @@
 /Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/CMakeFiles/rebuild_cache.dir
 /Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/TLX493D/pca10040/blank/armgcc/CMakeFiles/rebuild_cache.dir
-/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/TLX493D/pca10040/blank/armgcc/CMakeFiles/edit_cache.dir
-/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/TLX493D/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir
-/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/TLX493D/pca10056/blank/armgcc/CMakeFiles/rebuild_cache.dir
-/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/TLX493D/pca10056/blank/armgcc/CMakeFiles/edit_cache.dir
-/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/TLX493D/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir
+/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/rebuild_cache.dir
+/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/edit_cache.dir
+/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir
