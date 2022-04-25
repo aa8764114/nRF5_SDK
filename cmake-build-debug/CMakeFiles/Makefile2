@@ -63,57 +63,101 @@ CMAKE_BINARY_DIR = /Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/all
+all: examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/all
+all: examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall: examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/preinstall
+preinstall: examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/preinstall
+preinstall: examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/clean
+clean: examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/clean
+clean: examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/clean
 .PHONY : clean
 
 #=============================================================================
-# Directory level rules for directory examples/my_project/Motor+TLI493D/pca10040/blank/armgcc
+# Directory level rules for directory examples/my_project/TLX493D+Motor/pca10040/blank/armgcc
 
 # Recursive "all" directory target.
-examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/all: examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/all
-.PHONY : examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/all
+examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/all: examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/all
+.PHONY : examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/all
 
 # Recursive "preinstall" directory target.
-examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/preinstall:
-.PHONY : examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/preinstall
+examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/preinstall:
+.PHONY : examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/preinstall
 
 # Recursive "clean" directory target.
-examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/clean: examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/clean
-.PHONY : examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/clean
+examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/clean: examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/clean
+.PHONY : examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/clean
 
 #=============================================================================
-# Target rules for target examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir
+# Directory level rules for directory examples/my_project/TLX493D+Motor/pca10056/blank/armgcc
+
+# Recursive "all" directory target.
+examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/all: examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/all
+.PHONY : examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/all
+
+# Recursive "preinstall" directory target.
+examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/preinstall:
+.PHONY : examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/preinstall
+
+# Recursive "clean" directory target.
+examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/clean: examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/clean
+.PHONY : examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/clean
+
+#=============================================================================
+# Target rules for target examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir
 
 # All Build rule for target.
-examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/all:
-	$(MAKE) $(MAKESILENT) -f examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/build.make examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/depend
-	$(MAKE) $(MAKESILENT) -f examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/build.make examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29 "Built target low_power_pwm_pca10040"
-.PHONY : examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/all
+examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/all:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/build.make examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/depend
+	$(MAKE) $(MAKESILENT) -f examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/build.make examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33 "Built target twi_scanner_pca10040"
+.PHONY : examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/all
 
 # Build rule for subdir invocation for target.
-examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/CMakeFiles 29
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/all
+examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/CMakeFiles 33
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/CMakeFiles 0
-.PHONY : examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/rule
+.PHONY : examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/rule
 
 # Convenience name for target.
-low_power_pwm_pca10040: examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/rule
-.PHONY : low_power_pwm_pca10040
+twi_scanner_pca10040: examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/rule
+.PHONY : twi_scanner_pca10040
 
 # clean rule for target.
-examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/clean:
-	$(MAKE) $(MAKESILENT) -f examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/build.make examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/clean
-.PHONY : examples/my_project/Motor+TLI493D/pca10040/blank/armgcc/CMakeFiles/low_power_pwm_pca10040.dir/clean
+examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/clean:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/build.make examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/clean
+.PHONY : examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/clean
+
+#=============================================================================
+# Target rules for target examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir
+
+# All Build rule for target.
+examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/all:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/build.make examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/depend
+	$(MAKE) $(MAKESILENT) -f examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/build.make examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/CMakeFiles --progress-num=34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66 "Built target twi_scanner_pca10056"
+.PHONY : examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/all
+
+# Build rule for subdir invocation for target.
+examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/CMakeFiles 33
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/CMakeFiles 0
+.PHONY : examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/rule
+
+# Convenience name for target.
+twi_scanner_pca10056: examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/rule
+.PHONY : twi_scanner_pca10056
+
+# clean rule for target.
+examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/clean:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/build.make examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/clean
+.PHONY : examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -1,4 +1,4 @@
-# Install script for directory: /Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560
+# Install script for directory: /Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/examples/my_project/TLX493D+Motor/pca10040/blank/armgcc
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -37,20 +37,3 @@ if(NOT DEFINED CMAKE_OBJDUMP)
   set(CMAKE_OBJDUMP "/Library/Developer/CommandLineTools/usr/bin/objdump")
 endif()
 
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for each subdirectory.
-  include("/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/cmake_install.cmake")
-  include("/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/cmake_install.cmake")
-
-endif()
-
-if(CMAKE_INSTALL_COMPONENT)
-  set(CMAKE_INSTALL_MANIFEST "install_manifest_${CMAKE_INSTALL_COMPONENT}.txt")
-else()
-  set(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
-endif()
-
-string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
-       "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
-     "${CMAKE_INSTALL_MANIFEST_CONTENT}")
