@@ -415,10 +415,10 @@ my6_ble_app_blinky_pca10056_s140_BINARY_DIR:STATIC=/Users/motosawa/Documents/nRF
 my6_ble_app_blinky_pca10056_s140_SOURCE_DIR:STATIC=/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/examples/my_project/ble_app_blinky_dfu5/pca10056/s140/armgcc
 
 //Value Computed by CMake
-myDFU_ble_app_blinky_pca10056_s140_BINARY_DIR:STATIC=/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/ble_app_blinky_DFU_sched/pca10056/s140/armgcc
+myDFU_ble_app_blinky_pca10056_s140_BINARY_DIR:STATIC=/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/ble_app_blinky_DFU/pca10056/s140/armgcc
 
 //Value Computed by CMake
-myDFU_ble_app_blinky_pca10056_s140_SOURCE_DIR:STATIC=/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/examples/my_project/ble_app_blinky_DFU_sched/pca10056/s140/armgcc
+myDFU_ble_app_blinky_pca10056_s140_SOURCE_DIR:STATIC=/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/examples/my_project/ble_app_blinky_DFU/pca10056/s140/armgcc
 
 //Value Computed by CMake
 myDFU_fds2_ble_app_blinky_pca10056_s140_BINARY_DIR:STATIC=/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/ble_app_blinky_DFU_fds2/pca10056/s140/armgcc

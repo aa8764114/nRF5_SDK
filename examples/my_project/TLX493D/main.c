@@ -47,6 +47,10 @@ void TLI493D_twi_init (void)
 
 void set_mode()
 {
+    //抄Arduino範例程式
+    uint8_t reg[3] = {0x10, 0b00000000, 0b00011001};
+    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg, sizeof(reg), false);
+
     //禁用Ｚ偵測、溫度偵測
     //Infineon-TLI_493D-W2BW-UserManual-v01_10-EN.pdf 第9頁
 //    uint8_t reg2[2] = {0x10, 0b11000000};

@@ -11,6 +11,9 @@
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 #include"nrf_gpio.h"
+#include "app_timer.h"
+#include "app_button.h"
+
 
 
 /* TWI instance ID. */
@@ -31,8 +34,14 @@
 /* 馬達參數 */
 #define motor_switch 31
 #define motor_reverse 30
+
+/* 按鍵設定 */
 #define switch_btn 13
 #define reverse_btn 14
+#define degree1_btn 15
+#define degree2_btn 16
+#define BUTTON_DETECTION_DELAY          APP_TIMER_TICKS(50)
+
 
 
 //nRF52有兩組I2C(TWI)要開哪一個
@@ -56,6 +65,10 @@ void TLI493D_twi_init (void)
 
 void set_mode()
 {
+    //抄Arduino範例程式
+    uint8_t reg[3] = {0x10, 0b00000000, 0b00011001};
+    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg, sizeof(reg), false);
+
     //禁用Ｚ偵測、溫度偵測
     //Infineon-TLI_493D-W2BW-UserManual-v01_10-EN.pdf 第9頁
 //    uint8_t reg2[2] = {0x10, 0b11000000};
@@ -93,7 +106,7 @@ void TLI493D_init()
     TLI493D_pin_setup();     //設定軟體操控按鍵
 }
 
-void TLI493D_data_read()
+int TLI493D_data_read()
 {
     //送出設定值觸發開始測量
     uint8_t config = 0b00100000;
@@ -111,35 +124,60 @@ void TLI493D_data_read()
 //    NRF_LOG_INFO("X:%d Y:%d Z:%d T:%d", X, Y, Z, T)
 
     //把解析數據轉角度
-    int degree = 0;
-    degree = ((atan2(Y, X)*360)/(2*PI))+180;
-    NRF_LOG_INFO("degree:%d", degree)
+    int degree = ((atan2(Y, X)*360)/(2*PI))+180;
+//    NRF_LOG_INFO("degree:%d\n", degree)
+    
+    return degree;
 }
 
 void motor_init()
 {
-    nrf_gpio_cfg_input(switch_btn, NRF_GPIO_PIN_PULLUP);
-    nrf_gpio_cfg_input(reverse_btn, NRF_GPIO_PIN_PULLUP);
     nrf_gpio_cfg_output(motor_switch);
     nrf_gpio_cfg_output(motor_reverse);
 
-    nrf_gpio_pin_clear(motor_switch);
+    nrf_gpio_pin_set(motor_switch);   //不轉
+//    nrf_gpio_pin_clear(motor_switch);   //轉
     nrf_gpio_pin_clear(motor_reverse);
 }
 
-void motor_start()
+void buttons_init()
 {
-//    nrf_delay_ms(10);
-    if(nrf_gpio_pin_read(switch_btn) == 0)//如果有按下開關
+    nrf_gpio_cfg_input(switch_btn, NRF_GPIO_PIN_PULLUP);
+    nrf_gpio_cfg_input(reverse_btn, NRF_GPIO_PIN_PULLUP);
+    nrf_gpio_cfg_input(degree1_btn, NRF_GPIO_PIN_PULLUP);
+    nrf_gpio_cfg_input(degree2_btn, NRF_GPIO_PIN_PULLUP);
+}
+
+//num:幾度停
+//tolerance:容許誤差幾度
+int motor_degree_stop(int num , int tolerance)
+{
+    int degree = TLI493D_data_read();
+    if(abs(degree-num)>tolerance)
     {
-        nrf_gpio_pin_toggle(motor_switch);//本來如果是轉就變不轉，不轉就變轉
-        while(nrf_gpio_pin_read(switch_btn) == 0);//如果發現按鈕一直按著就不動，卡在那邊
+        nrf_gpio_pin_clear(motor_switch);   //轉
+        return 1;
+    }
+    else
+    {
+        nrf_gpio_pin_set(motor_switch);   //不轉
+        return 0;
+    }
+}
+
+void button_start()
+{
+    nrf_delay_ms(10);
+    if(nrf_gpio_pin_read(degree1_btn) == 0)//如果有按下開關
+    {
+        while(motor_degree_stop(90, 4));    //用while迴圈轉到指定角度停下來
+        NRF_LOG_INFO("degree:%d", TLI493D_data_read())
     }
 
-    if(nrf_gpio_pin_read(reverse_btn) == 0)//如果有按下開關
+    if(nrf_gpio_pin_read(degree2_btn) == 0)//如果有按下開關
     {
-        nrf_gpio_pin_toggle(motor_reverse);//本來如果是轉就變不轉，不轉就變轉
-        while(nrf_gpio_pin_read(reverse_btn) == 0);//如果發現按鈕一直按著就不動，卡在那邊
+        while(motor_degree_stop(270, 4));
+        NRF_LOG_INFO("degree:%d", TLI493D_data_read())
     }
 }
 
@@ -149,13 +187,12 @@ int main(void)
     NRF_LOG_DEFAULT_BACKENDS_INIT();
     NRF_LOG_INFO("TLI493D started.");
     TLI493D_init();
+    buttons_init();
     motor_init();
 
     while (true)
     {
-        nrf_delay_ms(50);
-//        motor_start();
-        TLI493D_data_read();
+        button_start();
         NRF_LOG_FLUSH();
     }
 }
