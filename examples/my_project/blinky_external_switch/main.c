@@ -5,8 +5,8 @@
 
 #include"nrf_gpio.h"
 
-#define led 31
-#define button 13
+#define led 10
+#define button 28
 
 int main(void)
 {

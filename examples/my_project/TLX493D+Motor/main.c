@@ -31,6 +31,12 @@
 
 #define PI  3.14159265358979f
 
+#define mBMult                      1.0/7.7
+#define TLI493D_MSB_MASK			0x07F8
+#define TLI493D_LSB_MASK			0x0007
+
+
+
 /* 馬達參數 */
 #define motor_switch 31
 #define motor_reverse 30
@@ -40,7 +46,7 @@
 #define reverse_btn 14
 #define degree1_btn 15
 #define degree2_btn 16
-#define BUTTON_DETECTION_DELAY          APP_TIMER_TICKS(50)
+
 
 
 
@@ -61,6 +67,67 @@ void TLI493D_twi_init (void)
 
     nrf_drv_twi_enable(&m_twi); //啟動TWI
     nrf_delay_ms(50); //等50ms
+}
+
+void setWakeUpThresholdMT(float xh_th, float xl_th, float yh_th, float yl_th, float zh_th, float zl_th){
+
+    int16_t xh = (int16_t)(xh_th/mBMult); int16_t xl = (int16_t)(xl_th/mBMult);
+    int16_t yh = (int16_t)(yh_th/mBMult); int16_t yl = (int16_t)(yl_th/mBMult);
+    int16_t zh = (int16_t)(zh_th/mBMult); int16_t zl = (int16_t)(zl_th/mBMult);
+
+    xh >>= 1; xl >>= 1;
+    yh >>= 1; yl >>= 1;
+    zh >>= 1; zl >>= 1;
+
+    zh = yh;
+    zl = yl;
+
+//設定Ｘ偵測門檻
+//    setRegBits(tli493d::XL, (xl&TLI493D_MSB_MASK) >> 3);  07H
+//    setRegBits(tli493d::XL2, xl&TLI493D_LSB_MASK);        0DH
+//    setRegBits(tli493d::XH, (xh&TLI493D_MSB_MASK) >> 3);  08H
+//    setRegBits(tli493d::XH2, xh&TLI493D_LSB_MASK);        0DH
+//    wake_up:WA->1, WU->1  (0b11000000)                    0DH
+    //0x07寫入內容
+    uint8_t reg[2] = {0x07, (xl&TLI493D_MSB_MASK) >> 3};
+    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg, sizeof(reg), false);
+    //0x08寫入內容
+    uint8_t reg2[2] = {0x08, (xh&TLI493D_MSB_MASK) >> 3};
+    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg2, sizeof(reg2), false);
+    //0x0D寫入內容
+    uint8_t reg3[2] = {0x0D, ((xl&TLI493D_LSB_MASK) | (xh&TLI493D_LSB_MASK) | (0b11000000)) };
+    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg3, sizeof(reg3), false);
+
+
+//    setRegBits(tli493d::YL, (yl&TLI493D_MSB_MASK) >> 3);  09H
+//    setRegBits(tli493d::YL2, yl&TLI493D_LSB_MASK);        0EH
+//    setRegBits(tli493d::YH, (yh&TLI493D_MSB_MASK) >> 3);  0AH
+//    setRegBits(tli493d::YH2, yh&TLI493D_LSB_MASK);        0EH
+    //0x09寫入內容
+    uint8_t reg4[2] = {0x09, (yl&TLI493D_MSB_MASK) >> 3};
+    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg4, sizeof(reg4), false);
+    //0x0A寫入內容
+    uint8_t reg5[2] = {0x0A, (yh&TLI493D_MSB_MASK) >> 3};
+    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg5, sizeof(reg5), false);
+    //0x0E寫入內容
+    uint8_t reg6[2] = {0x0E, (yl&TLI493D_LSB_MASK)|(yh&TLI493D_LSB_MASK)};
+    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg6, sizeof(reg6), false);
+
+
+
+//    setRegBits(tli493d::ZL, (zl&TLI493D_MSB_MASK) >> 3);  0BH
+//    setRegBits(tli493d::ZL2, zl&TLI493D_LSB_MASK);        0FH
+//    setRegBits(tli493d::ZH, (zh&TLI493D_MSB_MASK) >> 3);  0CH
+//    setRegBits(tli493d::ZH2, zh&TLI493D_LSB_MASK);        0FH
+    //0x0B寫入內容
+    uint8_t reg7[2] = {0x0B, (zl&TLI493D_MSB_MASK) >> 3};
+    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg7, sizeof(reg7), false);
+    //0x0C寫入內容
+    uint8_t reg8[2] = {0x0C, (zh&TLI493D_MSB_MASK) >> 3};
+    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg8, sizeof(reg8), false);
+    //0x0F寫入內容
+    uint8_t reg9[2] = {0x0F, (zl&TLI493D_LSB_MASK)|(zh&TLI493D_LSB_MASK)};
+    nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg9, sizeof(reg9), false);
 }
 
 void set_mode()
@@ -88,6 +155,9 @@ void set_mode()
 
     uint8_t reg5[2] = {0x14, 0b1};  //X4->1
     nrf_drv_twi_tx(&m_twi, TLI493D_ADDRESS, reg5, sizeof(reg5), false);
+
+    //Interrupts will just be sent when any of the axis X,Y,Z sees a magnetic field higher than +/-3mT -> WakeUp-feature
+    setWakeUpThresholdMT(3.0,-3.0,3.0,-3.0,3.0,-3.0);
 
     //送出設定值觸發開始測量
     uint8_t config = 0b00100000;
@@ -150,16 +220,27 @@ void buttons_init()
 
 //num:幾度停
 //tolerance:容許誤差幾度
+//誤差>=7度可以處理掉邊界問題
 int motor_degree_stop(int num , int tolerance)
 {
     int degree = TLI493D_data_read();
-    if(abs(degree-num)>tolerance)
+
+    if(num>=0 && num <=360)
     {
-        nrf_gpio_pin_clear(motor_switch);   //轉
-        return 1;
+        if(abs(degree-num)>tolerance)
+        {
+            nrf_gpio_pin_clear(motor_switch);   //轉
+            return 1;
+        }
+        else
+        {
+            nrf_gpio_pin_set(motor_switch);   //不轉
+            return 0;
+        }
     }
     else
     {
+        NRF_LOG_INFO("Please input 0 ~ 360");
         nrf_gpio_pin_set(motor_switch);   //不轉
         return 0;
     }
@@ -170,13 +251,13 @@ void button_start()
     nrf_delay_ms(10);
     if(nrf_gpio_pin_read(degree1_btn) == 0)//如果有按下開關
     {
-        while(motor_degree_stop(90, 4));    //用while迴圈轉到指定角度停下來
+        while(motor_degree_stop(0, 8));    //用while迴圈轉到指定角度停下來
         NRF_LOG_INFO("degree:%d", TLI493D_data_read())
     }
 
     if(nrf_gpio_pin_read(degree2_btn) == 0)//如果有按下開關
     {
-        while(motor_degree_stop(270, 4));
+        while(motor_degree_stop(180, 8));
         NRF_LOG_INFO("degree:%d", TLI493D_data_read())
     }
 }
@@ -193,6 +274,7 @@ int main(void)
     while (true)
     {
         button_start();
+//        NRF_LOG_INFO("degree:%d", TLI493D_data_read())
         NRF_LOG_FLUSH();
     }
 }
