@@ -39,8 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/cmake_install.cmake")
-  include("/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/cmake_install.cmake")
+  include("/Users/motosawa/Documents/nRF5_SDK_17.1.0_ddde560/cmake-build-debug/examples/my_project/ble_app_blinky_DFU_sched/pca10056/s140/armgcc/cmake_install.cmake")
 
 endif()
 
