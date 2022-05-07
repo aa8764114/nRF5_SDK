@@ -117,17 +117,30 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named myDFU_ble_app_blinky_pca10056_s140
+# Target rules for targets named twi_scanner_pca10040
 
 # Build rule for target.
-myDFU_ble_app_blinky_pca10056_s140: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 myDFU_ble_app_blinky_pca10056_s140
-.PHONY : myDFU_ble_app_blinky_pca10056_s140
+twi_scanner_pca10040: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 twi_scanner_pca10040
+.PHONY : twi_scanner_pca10040
 
 # fast build rule for target.
-myDFU_ble_app_blinky_pca10056_s140/fast:
-	$(MAKE) $(MAKESILENT) -f examples/my_project/ble_app_blinky_DFU_sched/pca10056/s140/armgcc/CMakeFiles/myDFU_ble_app_blinky_pca10056_s140.dir/build.make examples/my_project/ble_app_blinky_DFU_sched/pca10056/s140/armgcc/CMakeFiles/myDFU_ble_app_blinky_pca10056_s140.dir/build
-.PHONY : myDFU_ble_app_blinky_pca10056_s140/fast
+twi_scanner_pca10040/fast:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/build.make examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/build
+.PHONY : twi_scanner_pca10040/fast
+
+#=============================================================================
+# Target rules for targets named twi_scanner_pca10056
+
+# Build rule for target.
+twi_scanner_pca10056: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 twi_scanner_pca10056
+.PHONY : twi_scanner_pca10056
+
+# fast build rule for target.
+twi_scanner_pca10056/fast:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/build.make examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/build
+.PHONY : twi_scanner_pca10056/fast
 
 # Help Target
 help:
@@ -137,7 +150,8 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... myDFU_ble_app_blinky_pca10056_s140"
+	@echo "... twi_scanner_pca10040"
+	@echo "... twi_scanner_pca10056"
 .PHONY : help
 
 

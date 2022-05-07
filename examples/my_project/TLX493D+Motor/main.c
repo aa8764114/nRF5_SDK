@@ -273,8 +273,8 @@ int main(void)
 
     while (true)
     {
-        button_start();
-//        NRF_LOG_INFO("degree:%d", TLI493D_data_read())
+//        button_start();
+        NRF_LOG_INFO("degree:%d", TLI493D_data_read())
         NRF_LOG_FLUSH();
     }
 }
