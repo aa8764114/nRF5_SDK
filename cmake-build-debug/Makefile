@@ -117,30 +117,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named twi_scanner_pca10040
+# Target rules for targets named twi_sensor_pca10040
 
 # Build rule for target.
-twi_scanner_pca10040: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 twi_scanner_pca10040
-.PHONY : twi_scanner_pca10040
+twi_sensor_pca10040: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 twi_sensor_pca10040
+.PHONY : twi_sensor_pca10040
 
 # fast build rule for target.
-twi_scanner_pca10040/fast:
-	$(MAKE) $(MAKESILENT) -f examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/build.make examples/my_project/TLX493D+Motor/pca10040/blank/armgcc/CMakeFiles/twi_scanner_pca10040.dir/build
-.PHONY : twi_scanner_pca10040/fast
-
-#=============================================================================
-# Target rules for targets named twi_scanner_pca10056
-
-# Build rule for target.
-twi_scanner_pca10056: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 twi_scanner_pca10056
-.PHONY : twi_scanner_pca10056
-
-# fast build rule for target.
-twi_scanner_pca10056/fast:
-	$(MAKE) $(MAKESILENT) -f examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/build.make examples/my_project/TLX493D+Motor/pca10056/blank/armgcc/CMakeFiles/twi_scanner_pca10056.dir/build
-.PHONY : twi_scanner_pca10056/fast
+twi_sensor_pca10040/fast:
+	$(MAKE) $(MAKESILENT) -f examples/my_project/twi_sensor/pca10040/blank/armgcc/CMakeFiles/twi_sensor_pca10040.dir/build.make examples/my_project/twi_sensor/pca10040/blank/armgcc/CMakeFiles/twi_sensor_pca10040.dir/build
+.PHONY : twi_sensor_pca10040/fast
 
 # Help Target
 help:
@@ -150,8 +137,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... twi_scanner_pca10040"
-	@echo "... twi_scanner_pca10056"
+	@echo "... twi_sensor_pca10040"
 .PHONY : help
 
 
